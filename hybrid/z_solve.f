@@ -16,8 +16,8 @@ c     Make sure we treat elements zero to cell_size in the direction
 c     of the sweep.
 c---------------------------------------------------------------------
 
-      use bt_data
-      implicit none
+      include 'header.h'
+      include 'work_lhs.h'
 
       integer nx, nxmax, ny, nz
       double precision rho_i(  0:nxmax-1,0:ny-1,0:nz-1), 
@@ -27,8 +27,7 @@ c---------------------------------------------------------------------
      $                 rhs  (5,0:nxmax-1,0:ny-1,0:nz-1)
 
       integer i, j, k, m, n, ksize
-      double precision tmp1, tmp2, tmp3
-
+      
 c---------------------------------------------------------------------
 c---------------------------------------------------------------------
 
@@ -41,14 +40,16 @@ c---------------------------------------------------------------------
 c     This function computes the left hand side for the three z-factors   
 c---------------------------------------------------------------------
 
-!$OMP PARALLEL DEFAULT(SHARED) PRIVATE(n,m,k,i,j,ksize,tmp1,tmp2,tmp3)
+!$OMP PARALLEL DEFAULT(SHARED) PRIVATE(n,m,k,i,j,ksize)
+!$OMP&  SHARED(dz5,dz4,dz3,dz2,dz1,tz2,tz1,dt,c1345,c4,c3,con43,c3c4,c1,
+!$OMP&         c2,nx,ny,nz)
       ksize = nz-1
 
 c---------------------------------------------------------------------
 c     Compute the indices for storing the block-diagonal matrix;
 c     determine c (labeled f) and s jacobians
 c---------------------------------------------------------------------
-!$OMP DO SCHEDULE(static) COLLAPSE(2)
+!$OMP DO
       do j = 1, ny-2
          do i = 1, nx-2
             do k = 0, ksize

@@ -1,9 +1,7 @@
        subroutine zone_setup(nx, nxmax, ny, nz)
 
-       use bt_data
-       use mpinpb
-
-       implicit none
+       include 'header.h'
+       include 'mpi_stuff.h'
 
        integer nx(*), nxmax(*), ny(*), nz(*)
 
@@ -96,10 +94,8 @@ c        compute essentially equal sized zone dimensions
 
        subroutine zone_starts(num_zones, nx, nxmax, ny, nz)
 
-       use bt_data
-       use mpinpb
-
-       implicit none
+       include 'header.h'
+       include 'mpi_stuff.h'
 
        integer   num_zones
        integer   nx(*), nxmax(*), ny(*), nz(*)
@@ -108,8 +104,6 @@ c        compute essentially equal sized zone dimensions
        integer   x_face_size, y_face_size
        integer   ip_west, ip_east, ip_south, ip_north
 
-       tot_zonesize = 1
-       tot_zonesize5 = 1
        do iz = 1, proc_num_zones
          zone = proc_zone_id(iz)
          zone_size = nxmax(zone)*ny(zone)*nz(zone)
@@ -121,9 +115,14 @@ c        compute essentially equal sized zone dimensions
            start1(iz+1) = start1(iz) + zone_size
            start5(iz+1) = start5(iz) + zone_size*5
          else
-           tot_zonesize = start1(iz) + zone_size - 1
-           tot_zonesize5 = start5(iz) + zone_size*5 - 1
+           if (start1(iz)+zone_size-1 .gt. proc_max_size) then
+             write(*,50) zone,proc_max_size,start1(iz)+zone_size-1
+             call mpi_abort(MPI_COMM_WORLD, 1, ierror)
+             stop
+           endif
          endif
+   50    format(' Error in size: zone',i5,' proc_max_size',i10,
+     &          ' access_size',i10)
        enddo
 
 c ...  for 'qbc_in'
@@ -168,7 +167,6 @@ c ...  for 'qbc_in'
    15    continue
 
    10  continue
-       tot_bcsize_in = max(1, qoffset - 1)
 
 c ...  for 'qbc_out'
        qoffset = 1
@@ -240,7 +238,6 @@ c ...  for intra-process zone copy
            qoffset = qoffset + y_face_size
          endif
    40  continue
-       tot_bcsize_ou = max(1, qoffset - 1)
 
 c ...  set up cyclic communication group
        iz = 1
@@ -286,10 +283,10 @@ c ...  set up cyclic communication group
            zone = proc_zone_id(iz)
            write(*,60) myid, iz, zone, start1(iz), start5(iz)
          enddo
-         write(*,70) myid, tot_bcsize_in, tot_bcsize_ou
-   60    format(' myid',i6,' iz=',i5,' zone=',i5,
+         write(*,70) myid, qoffset-1
+   60    format(' myid',i5,' iz=',i5,' zone=',i5,
      &          ' start1=',i10,' start5=',i10)
-   70    format(' myid',i6,' bcsize_in=',i10,' bcsize_ou=',i10)
+   70    format(' myid',i5,' qcomm_size=',i10)
 
          do ig = 1, num_procs
            ip = pcomm_group(ig) + 1
@@ -300,7 +297,7 @@ c ...  set up cyclic communication group
            endif
            write(*,80) myid, ip-1, qoffset, qcomm_size(ip)
          enddo
-   80    format(' myid',i6,' proc',i6,' qcomm_size',2(1x,i10))
+   80    format(' myid',i5,' proc',i5,' qcomm_size',2(1x,i10))
        endif
 
        return

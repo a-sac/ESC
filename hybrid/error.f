@@ -11,8 +11,7 @@ c     this function computes the norm of the difference between the
 c     computed solution and the exact solution
 c---------------------------------------------------------------------
 
-      use bt_data
-      implicit none
+      include 'header.h'
 
       integer nx, nxmax, ny, nz
       double precision u(5,0:nxmax-1,0:ny-1,0:nz-1)
@@ -27,13 +26,14 @@ c---------------------------------------------------------------------
 
 !$OMP PARALLEL DEFAULT(SHARED) PRIVATE(rms_loc,add,m,u_exact,xi,i,eta,
 !$OMP& j,zeta,k)
+!$OMP&  SHARED(dnxm1,nx,dnym1,ny,dnzm1,nz)
       do m=1,5
          rms_loc(m)=0.0d0
       enddo
-!$OMP DO SCHEDULE(STATIC) COLLAPSE(2)
+!$OMP DO
       do k = 0, nz-1
-         do j = 0, ny-1
          zeta = dble(k) * dnzm1
+         do j = 0, ny-1
             eta = dble(j) * dnym1
             do i = 0, nx-1
                xi = dble(i) * dnxm1
@@ -70,8 +70,7 @@ c---------------------------------------------------------------------
 c---------------------------------------------------------------------
 c---------------------------------------------------------------------
 
-      use bt_data
-      implicit none
+      include 'header.h'
 
       integer nx, nxmax, ny, nz
       double precision rhs(5,0:nxmax-1,0:ny-1,0:nz-1)
@@ -85,10 +84,11 @@ c---------------------------------------------------------------------
       enddo 
 
 !$OMP PARALLEL DEFAULT(SHARED) PRIVATE(rms_loc,add,m,i,j,k)
+!$OMP&  SHARED(nx,ny,nz)
       do m=1,5
          rms_loc(m)=0.0d0
       enddo
-!$OMP DO SCHEDULE(STATIC) COLLAPSE(2)
+!$OMP DO
       do k = 1, nz-2
          do j = 1, ny-2
             do i = 1, nx-2

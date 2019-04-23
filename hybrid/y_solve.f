@@ -16,8 +16,8 @@ c     Make sure we treat elements zero to cell_size in the direction
 c     of the sweep.
 c---------------------------------------------------------------------
 
-      use bt_data
-      implicit none
+      include 'header.h'
+      include 'work_lhs.h'
 
       integer nx, nxmax, ny, nz
       double precision rho_i(  0:nxmax-1,0:ny-1,0:nz-1), 
@@ -27,7 +27,6 @@ c---------------------------------------------------------------------
      $                 rhs  (5,0:nxmax-1,0:ny-1,0:nz-1)
 
       integer i, j, k, m, n, jsize
-      double precision tmp1, tmp2, tmp3
 
 c---------------------------------------------------------------------
 c---------------------------------------------------------------------
@@ -41,14 +40,16 @@ c---------------------------------------------------------------------
 c     This function computes the left hand side for the three y-factors   
 c---------------------------------------------------------------------
 
-!$OMP PARALLEL DEFAULT(SHARED) PRIVATE(n,m,j,i,k,jsize,tmp1,tmp2,tmp3)
+!$OMP PARALLEL DEFAULT(SHARED) PRIVATE(n,m,j,i,k,jsize)
+!$OMP&  SHARED(dy5,dy4,dy3,dy2,dy1,ty2,ty1,dt,c1345,con43,c3c4,c1,c2,
+!$OMP&         nx,ny,nz)
       jsize = ny-1
 
 c---------------------------------------------------------------------
 c     Compute the indices for storing the tri-diagonal matrix;
 c     determine a (labeled f) and n jacobians for cell c
 c---------------------------------------------------------------------
-!$OMP DO SCHEDULE(static) COLLAPSE(2)
+!$OMP DO
       do k = 1, nz-2
          do i = 1, nx-2
             do j = 0, jsize

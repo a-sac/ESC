@@ -11,8 +11,7 @@ c---------------------------------------------------------------------
 c     compute the right hand side based on exact solution
 c---------------------------------------------------------------------
 
-      use bt_data
-      implicit none
+      include 'header.h'
 
       integer nx, nxmax, ny, nz
       double precision forcing(5,0:nxmax-1,0:ny-1,0:nz-1)
@@ -21,10 +20,15 @@ c---------------------------------------------------------------------
 
 !$OMP PARALLEL DEFAULT(SHARED) PRIVATE(kp1,km1,jp1,jm1,ip1,im1,dtpp,
 !$OMP& dtemp,xi,eta,zeta,m,i,j,k)
+!$OMP&  SHARED(dz5tz1,zzcon5,zzcon4,zzcon3,dz4tz1,zzcon1,dz3tz1,dz2tz1,
+!$OMP& zzcon2,dz1tz1,tz2,dy5ty1,yycon5,yycon4,yycon3,dy4ty1,dy3ty1,
+!$OMP& yycon1,dy2ty1,yycon2,dy1ty1,ty2,dssp,dx5tx1,xxcon5,xxcon4,xxcon3,
+!$OMP& c1,dx4tx1,dx3tx1,xxcon2,dx2tx1,xxcon1,c2,dx1tx1,tx2,dnxm1,dnym1,
+!$OMP& dnzm1,nx,ny,nz)
 c---------------------------------------------------------------------
 c     initialize                                  
 c---------------------------------------------------------------------
-!$OMP DO SCHEDULE(STATIC) COLLAPSE(2)
+!$OMP DO SCHEDULE(STATIC)
       do k= 0, nz-1
          do j = 0, ny-1
             do i = 0, nx-1
@@ -39,10 +43,10 @@ c---------------------------------------------------------------------
 c---------------------------------------------------------------------
 c     xi-direction flux differences                      
 c---------------------------------------------------------------------
-!$OMP DO SCHEDULE(STATIC) COLLAPSE(2)
+!$OMP DO SCHEDULE(STATIC)
       do k = 1, nz-2
+         zeta = dble(k) * dnzm1
          do j = 1, ny-2
-            zeta = dble(k) * dnzm1
             eta = dble(j) * dnym1
 
             do i=0, nx-1
@@ -135,15 +139,15 @@ c---------------------------------------------------------------------
 
          enddo
       enddo
-!$OMP END DO
+!$OMP END DO nowait
 
 c---------------------------------------------------------------------
 c     eta-direction flux differences             
 c---------------------------------------------------------------------
-!$OMP DO SCHEDULE(STATIC) COLLAPSE(2)
+!$OMP DO SCHEDULE(STATIC)
       do k = 1, nz-2          
+         zeta = dble(k) * dnzm1
          do i=1, nx-2
-            zeta = dble(k) * dnzm1
             xi = dble(i) * dnxm1
 
             do j=0, ny-1
@@ -240,10 +244,10 @@ c---------------------------------------------------------------------
 c---------------------------------------------------------------------
 c     zeta-direction flux differences                      
 c---------------------------------------------------------------------
-!$OMP DO SCHEDULE(STATIC) COLLAPSE(2)
+!$OMP DO SCHEDULE(STATIC)
       do j=1, ny-2
+         eta = dble(j) * dnym1
          do i = 1, nx-2
-            eta = dble(j) * dnym1
             xi = dble(i) * dnxm1
 
             do k=0, nz-1
@@ -339,7 +343,7 @@ c---------------------------------------------------------------------
 c---------------------------------------------------------------------
 c     now change the sign of the forcing function, 
 c---------------------------------------------------------------------
-!$OMP DO SCHEDULE(STATIC) COLLAPSE(2)
+!$OMP DO SCHEDULE(STATIC)
       do k = 1, nz-2
          do j = 1, ny-2
             do i = 1, nx-2

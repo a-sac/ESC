@@ -1,6 +1,6 @@
 !-------------------------------------------------------------------------!
 !                                                                         !
-!        N  A  S     P A R A L L E L     B E N C H M A R K S  3.4         !
+!        N  A  S     P A R A L L E L     B E N C H M A R K S  3.3         !
 !                                                                         !
 !             M P I    M U L T I - Z O N E    V E R S I O N               !
 !                                                                         !
@@ -14,10 +14,10 @@
 !    Permission to use, copy, distribute and modify this software         !
 !    for any purpose with or without fee is hereby granted.  We           !
 !    request, however, that all derived work reference the NAS            !
-!    Parallel Benchmarks 3.4. This software is provided "as is"           !
+!    Parallel Benchmarks 3.3. This software is provided "as is"           !
 !    without express or implied warranty.                                 !
 !                                                                         !
-!    Information on NPB 3.4, including the technical report, the          !
+!    Information on NPB 3.3, including the technical report, the          !
 !    original specifications, source code, results and information        !
 !    on how to submit new results, is available at:                       !
 !                                                                         !
@@ -45,31 +45,48 @@ c
 c---------------------------------------------------------------------
 
 c---------------------------------------------------------------------
-       program BT_MZ
+       program BT
 c---------------------------------------------------------------------
 
-       use bt_data
-       use bt_fields
-       use mpinpb
-
-       implicit none
+       include  'header.h'
+       include  'mpi_stuff.h'
       
+       integer num_zones
+       parameter (num_zones=x_zones*y_zones)
+
+       integer   nx(num_zones), nxmax(num_zones), ny(num_zones), 
+     $           nz(num_zones)
+
 c---------------------------------------------------------------------
-c      local variables
+c   Define all field arrays as one-dimenional arrays, to be reshaped
 c---------------------------------------------------------------------
-       integer          num_zones
+       double precision 
+     >   u       (proc_max_size5),
+     >   us      (proc_max_size ),
+     >   vs      (proc_max_size ),
+     >   ws      (proc_max_size ),
+     >   qs      (proc_max_size ),
+     >   rho_i   (proc_max_size ),
+     >   square  (proc_max_size ),
+     >   rhs     (proc_max_size5),
+     >   forcing (proc_max_size5),
+     >   qbc_ou  (proc_max_bcsize), 
+     >   qbc_in  (proc_max_bcsize)
+
+       common /fields/ u, us, vs, ws, qs, rho_i, square, 
+     >                 rhs, forcing, qbc_ou, qbc_in
+
        integer          i, niter, step, fstatus, zone, 
      >                  iz, ip, tot_threads, itimer
        double precision navg, mflops, nsur, n3
 
        external         timer_read
-       double precision tmax, timer_read, t, trecs(t_last),
-     >                  tsum(t_last), tming(t_last), tmaxg(t_last)
+       double precision tmax, timer_read, t, trecs(t_last)
        logical          verified
        character        t_names(t_last)*8
 
 
-       call setup_mpi
+       call mpi_setup
        if (.not. active) goto 999
 
 c---------------------------------------------------------------------
@@ -79,21 +96,20 @@ c---------------------------------------------------------------------
        if (myid .eq. root) then
 
          write(*, 1000)
-
-         call check_timer_flag( itimer )
-
          open (unit=2,file='inputbt-mz.data',status='old', 
      >         iostat=fstatus)
 
+         timeron = .false.
          if (fstatus .eq. 0) then
            write(*,*) 'Reading from input file inputbt-mz.data'
            read (2,*) niter
            read (2,*) dt
-           read (2,*,err=20,end=20) itimer
-   20      close(2)
+           read (2,*) itimer
+           close(2)
 
            if (niter .eq. 0)  niter = niter_default
            if (dt .eq. 0.d0)  dt    = dt_default
+           if (itimer .gt. 0) timeron = .true.
 
          else
            niter = niter_default
@@ -101,24 +117,21 @@ c---------------------------------------------------------------------
          endif
 
          write(*, 1001) x_zones, y_zones
-         write(*, 1002) gx_size, gy_size, gz_size
-         write(*, 1003) niter, dt
-         write(*, 1004) num_procs
+         write(*, 1002) niter, dt
+         write(*, 1003) num_procs
        endif
- 1000  format(//, ' NAS Parallel Benchmarks (NPB3.4-MZ MPI+OpenMP)',
-     >            ' - BT-MZ Benchmark', /)
+ 1000  format(//, ' NAS Parallel Benchmarks (NPB3.3-MZ-MPI)',
+     >            ' - BT-MZ MPI+OpenMP Benchmark', /)
  1001  format(' Number of zones: ', i3, ' x ', i3)
- 1002  format(' Total mesh size: ', i5, ' x ', i5, ' x ', i3)
- 1003  format(' Iterations: ', i3, '    dt: ', F10.6)
- 1004  format(' Number of active processes: ', i6/)
+ 1002  format(' Iterations: ', i3, '    dt: ', F10.6)
+ 1003  format(' Number of active processes: ', i5/)
 
        call mpi_bcast(niter, 1, MPI_INTEGER,
      >                root, comm_setup, ierror)
        call mpi_bcast(dt, 1, dp_type,
      >                root, comm_setup, ierror)
-       call mpi_bcast(itimer, 1, MPI_INTEGER,
+       call mpi_bcast(timeron, 1, MPI_LOGICAL,
      >                root, comm_setup, ierror)
-       timeron = (itimer .gt. 0)
 
        if (timeron) then
          t_names(t_total) = 'total'
@@ -134,23 +147,12 @@ c---------------------------------------------------------------------
          t_names(t_add) = 'add'
        endif
 
-c---------------------------------------------------------------------
-c      allocate space for working arrays
-c---------------------------------------------------------------------
-       call alloc_proc_space
-
        call env_setup(tot_threads)
 
        call zone_setup(nx, nxmax, ny, nz)
 
-       num_zones = max_zones
        call map_zones(num_zones, nx, ny, nz, tot_threads)
        call zone_starts(num_zones, nx, nxmax, ny, nz)
-
-c---------------------------------------------------------------------
-c      allocate space for field arrays
-c---------------------------------------------------------------------
-       call alloc_field_space
 
        call set_constants
 
@@ -268,26 +270,6 @@ c---------------------------------------------------------------------
           trecs(i) = timer_read(i)
        end do
 
-       call MPI_Reduce(trecs, tsum,  t_last, dp_type, MPI_SUM, 
-     >                 0, comm_setup, ierror)
-       call MPI_Reduce(trecs, tming, t_last, dp_type, MPI_MIN, 
-     >                 0, comm_setup, ierror)
-       call MPI_Reduce(trecs, tmaxg, t_last, dp_type, MPI_MAX, 
-     >                 0, comm_setup, ierror)
-
-       if (myid .eq. 0) then
-          write(*, 700) num_procs
-          do i = 1, t_last
-             tsum(i) = tsum(i) / num_procs
-             write(*, 710) i, t_names(i), tming(i), tmaxg(i), tsum(i)
-          end do
-       endif
- 700   format(' nprocs =', i6, 11x, 'minimum', 5x, 'maximum', 
-     >        5x, 'average')
- 710   format(' timer ', i2, '(', A8, ') :', 3(2x,f10.4))
-
-       if (itimer .lt. 2) goto 999
-
        if (myid .gt. 0) then
           call mpi_recv(i, 1, MPI_INTEGER, 0, 1000, 
      >                  comm_setup, statuses, ierror)
@@ -299,8 +281,8 @@ c---------------------------------------------------------------------
        ip = 0
        if (tmax .eq. 0.0) tmax = 1.0
  910   write(*,800) ip, proc_num_threads(ip+1)
- 800   format(/' Myid =',i6,'   num_threads =',i4/
-     >         '  SECTION   Time (secs)')
+ 800   format(' Myid =',i5,'   num_threads =',i4/
+     >        '  SECTION   Time (secs)')
        do i=1, t_last
           write(*,810) t_names(i), trecs(i), trecs(i)*100./tmax
           if (i.eq.t_rhs) then
@@ -322,6 +304,7 @@ c---------------------------------------------------------------------
      >                  comm_setup, ierror)
           call mpi_recv(trecs, t_last, dp_type, ip, 1001, 
      >                  comm_setup, statuses, ierror)
+          write(*,*)
           goto 910
        endif
 

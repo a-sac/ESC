@@ -10,8 +10,7 @@ c---------------------------------------------------------------------
 c     this function returns the exact solution at point xi, eta, zeta  
 c---------------------------------------------------------------------
 
-      use bt_data
-      implicit none
+      include 'header.h'
 
       double precision  xi, eta, zeta, dtemp(5)
       integer m

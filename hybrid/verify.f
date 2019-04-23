@@ -13,12 +13,8 @@ c---------------------------------------------------------------------
 c  verification routine                         
 c---------------------------------------------------------------------
 
-        use, intrinsic :: ieee_arithmetic, only : ieee_is_nan
-
-        use bt_data
-        use mpinpb
-
-        implicit none
+        include 'header.h'
+        include 'mpi_stuff.h'
 
         integer zone, num_zones
         double precision rho_i(*), us(*), vs(*), ws(*), qs(*), 
@@ -339,8 +335,7 @@ c---------------------------------------------------------------------
 
  2001   format(' Comparison of RMS-norms of residual')
         do m = 1, 5
-           if ((.not.ieee_is_nan(xcrdif(m))) .and.
-     &         xcrdif(m) .le. epsilon) then
+           if (xcrdif(m) .le. epsilon) then
               write (*,2011) m,xcr(m),xcrref(m),xcrdif(m)
            else 
               verified = .false.
@@ -353,8 +348,7 @@ c---------------------------------------------------------------------
  2002   format(' Comparison of RMS-norms of solution error')
         
         do m = 1, 5
-           if ((.not.ieee_is_nan(xcedif(m))) .and.
-     &         xcedif(m) .le. epsilon) then
+           if (xcedif(m) .le. epsilon) then
               write (*,2011) m,xce(m),xceref(m),xcedif(m)
            else
               verified = .false.

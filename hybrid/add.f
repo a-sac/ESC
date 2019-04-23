@@ -10,8 +10,7 @@ c---------------------------------------------------------------------
 c     addition of update to the vector u
 c---------------------------------------------------------------------
 
-      use bt_data
-      implicit none
+      include 'header.h'
 
       integer nx, nxmax, ny, nz
       double precision rhs(5,0:nxmax-1,0:ny-1,0:nz-1), 
@@ -21,7 +20,7 @@ c---------------------------------------------------------------------
 
       if (timeron) call timer_start(t_add)
 !$OMP PARALLEL DO DEFAULT(SHARED) PRIVATE(m,i,j,k)
-!$OMP&  SCHEDULE(STATIC) COLLAPSE(2)
+!$OMP&  SHARED(nx,ny,nz)
       do     k = 1, nz-2
          do     j = 1, ny-2
             do     i = 1, nx-2

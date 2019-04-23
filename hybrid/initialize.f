@@ -11,8 +11,7 @@ c     This subroutine initializes the field variable u using
 c     tri-linear transfinite interpolation of the boundary values     
 c---------------------------------------------------------------------
 
-      use bt_data
-      implicit none
+      include 'header.h'
       
       integer nx, nxmax, ny, nz
       double precision u(5,0:nxmax-1,0:ny-1,0:nz-1)
@@ -20,16 +19,16 @@ c---------------------------------------------------------------------
       double precision  xi, eta, zeta, Pface(5,3,2), Pxi, Peta, 
      >     Pzeta, temp(5)
 
-!$OMP PARALLEL DEFAULT(SHARED) PRIVATE(temp,Pzeta,Peta,Pxi,m,iz,iy,
-!$OMP& Pface,ix,xi,i,eta,j,zeta,k)
-
 c---------------------------------------------------------------------
 c  Later (in compute_rhs) we compute 1/u for every element. A few of 
 c  the corner elements are not used, but it convenient (and faster) 
 c  to compute the whole thing with a simple loop. Make sure those 
 c  values are nonzero by initializing the whole thing here. 
 c---------------------------------------------------------------------
-!$OMP DO SCHEDULE(STATIC) COLLAPSE(2)
+!$OMP PARALLEL DEFAULT(SHARED) PRIVATE(temp,Pzeta,Peta,Pxi,m,iz,iy,
+!$OMP& Pface,ix,xi,i,eta,j,zeta,k)
+!$OMP&  SHARED(dnxm1,nx,dnym1,ny,dnzm1,nz)
+!$OMP DO SCHEDULE(STATIC)
       do k = 0, nz-1
          do j = 0, ny-1
             do i = 0, nx-1
@@ -48,10 +47,10 @@ c---------------------------------------------------------------------
 c     first store the "interpolated" values everywhere on the zone    
 c---------------------------------------------------------------------
 
-!$OMP DO SCHEDULE(STATIC) COLLAPSE(2)
+!$OMP DO SCHEDULE(STATIC)
       do k = 0, nz-1
-         do j = 0, ny-1
          zeta = dble(k) * dnzm1
+         do j = 0, ny-1
             eta = dble(j) * dnym1
             do i = 0, nx-1
                xi = dble(i) * dnxm1
@@ -98,10 +97,10 @@ c     west face
 c---------------------------------------------------------------------
       i = 0
       xi = 0.0d0
-!$OMP DO SCHEDULE(STATIC) COLLAPSE(2)
+!$OMP DO SCHEDULE(STATIC)
       do k = 0, nz-1
-         do j = 0, ny-1
          zeta = dble(k) * dnzm1
+         do j = 0, ny-1
             eta = dble(j) * dnym1
             call exact_solution(xi, eta, zeta, temp)
             do m = 1, 5
@@ -117,10 +116,10 @@ c---------------------------------------------------------------------
 
       i = nx-1
       xi = 1.0d0
-!$OMP DO SCHEDULE(STATIC) COLLAPSE(2)
+!$OMP DO SCHEDULE(STATIC)
       do k = 0, nz-1
-         do j = 0, ny-1
          zeta = dble(k) * dnzm1
+         do j = 0, ny-1
             eta = dble(j) * dnym1
             call exact_solution(xi, eta, zeta, temp)
             do m = 1, 5
@@ -128,7 +127,7 @@ c---------------------------------------------------------------------
             enddo
          enddo
       enddo
-!$OMP END DO
+!$OMP END DO nowait
 
 c---------------------------------------------------------------------
 c     south face                                                 

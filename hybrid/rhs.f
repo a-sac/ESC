@@ -7,8 +7,7 @@ c---------------------------------------------------------------------
 c---------------------------------------------------------------------
 c---------------------------------------------------------------------
 
-      use bt_data
-      implicit none
+      include 'header.h'
 
       integer nx, nxmax, ny, nz
       double precision rho_i  (  0:nxmax-1,0:ny-1,0:nz-1), 
@@ -28,10 +27,14 @@ c---------------------------------------------------------------------
       if (timeron) call timer_start(t_rhs)
 !$OMP PARALLEL DEFAULT(SHARED) PRIVATE(m,i,j,k,rho_inv,
 !$OMP&  um1,up1,uijk,vm1,vp1,vijk,wm1,wp1,wijk)
+!$OMP& SHARED(dssp,c1,c2,con43,dt,nx,ny,nz,xxcon2,yycon2,zzcon2,
+!$OMP&  xxcon5,xxcon4,xxcon3,dx5tx1,dx4tx1,dx3tx1,dx2tx1,tx2,dx1tx1,
+!$OMP&  yycon5,yycon4,yycon3,dy5ty1,dy4ty1,dy3ty1,dy2ty1,ty2,dy1ty1,
+!$OMP&  zzcon5,zzcon4,zzcon3,dz5tz1,dz4tz1,dz3tz1,dz2tz1,tz2,dz1tz1)
 c---------------------------------------------------------------------
 c     compute the reciprocal of density and the kinetic energy, 
 c---------------------------------------------------------------------
-!$OMP DO SCHEDULE(STATIC) COLLAPSE(2)
+!$OMP DO SCHEDULE(STATIC)
       do k = 0, nz-1
          do j = 0, ny-1
             do i = 0, nx-1
@@ -56,7 +59,7 @@ c this forcing term is known, we can store it on the whole zone
 c including the boundary                   
 c---------------------------------------------------------------------
 
-!$OMP DO SCHEDULE(STATIC) COLLAPSE(2)
+!$OMP DO SCHEDULE(STATIC)
       do k = 0, nz-1
          do j = 0, ny-1
             do i = 0, nx-1
@@ -74,7 +77,7 @@ c---------------------------------------------------------------------
 c---------------------------------------------------------------------
 c     compute xi-direction fluxes 
 c---------------------------------------------------------------------
-!$OMP DO SCHEDULE(STATIC) COLLAPSE(2)
+!$OMP DO SCHEDULE(STATIC)
       do k = 1, nz-2
          do j = 1, ny-2
             do i = 1, nx-2
@@ -128,10 +131,12 @@ c---------------------------------------------------------------------
      >                 (c1*u(5,i-1,j,k) - 
      >                 c2*square(i-1,j,k))*um1 )
             enddo
+         enddo
 
 c---------------------------------------------------------------------
 c     add fourth order xi-direction dissipation               
 c---------------------------------------------------------------------
+         do j = 1, ny-2
             i = 1
             do m = 1, 5
                rhs(m,i,j,k) = rhs(m,i,j,k)- dssp * 
@@ -145,7 +150,9 @@ c---------------------------------------------------------------------
      >                    (-4.0d0*u(m,i-1,j,k) + 6.0d0*u(m,i,j,k) -
      >                    4.0d0*u(m,i+1,j,k) + u(m,i+2,j,k))
             enddo
+         enddo
 
+         do j = 1, ny-2
             do i = 3,nx-4
                do m = 1, 5
                   rhs(m,i,j,k) = rhs(m,i,j,k) - dssp * 
@@ -154,7 +161,9 @@ c---------------------------------------------------------------------
      >                    u(m,i+2,j,k) )
                enddo
             enddo
+         enddo
          
+         do j = 1, ny-2
             i = nx-3
             do m = 1, 5
                rhs(m,i,j,k) = rhs(m,i,j,k) - dssp *
@@ -179,7 +188,7 @@ c---------------------------------------------------------------------
 c---------------------------------------------------------------------
 c     compute eta-direction fluxes 
 c---------------------------------------------------------------------
-!$OMP DO SCHEDULE(STATIC) COLLAPSE(2)
+!$OMP DO SCHEDULE(STATIC)
       do k = 1, nz-2
          do j = 1, ny-2
             do i = 1, nx-2
@@ -228,56 +237,56 @@ c---------------------------------------------------------------------
      >                 (c1*u(5,i,j-1,k) - 
      >                 c2*square(i,j-1,k)) * vm1)
             enddo
+         enddo
 
 c---------------------------------------------------------------------
 c     add fourth order eta-direction dissipation         
 c---------------------------------------------------------------------
-            if (j.eq.1) then
-               do i = 1, nx-2
-               do m = 1, 5
-                  rhs(m,i,j,k) = rhs(m,i,j,k)- dssp * 
+         j = 1
+         do i = 1, nx-2
+            do m = 1, 5
+               rhs(m,i,j,k) = rhs(m,i,j,k)- dssp * 
      >                    ( 5.0d0*u(m,i,j,k) - 4.0d0*u(m,i,j+1,k) +
      >                    u(m,i,j+2,k))
-               enddo
-               enddo
+            enddo
+         enddo
 
-            else if (j.eq.2) then
-               do i = 1, nx-2
-               do m = 1, 5
-                  rhs(m,i,j,k) = rhs(m,i,j,k) - dssp * 
+         j = 2
+         do i = 1, nx-2
+            do m = 1, 5
+               rhs(m,i,j,k) = rhs(m,i,j,k) - dssp * 
      >                    (-4.0d0*u(m,i,j-1,k) + 6.0d0*u(m,i,j,k) -
      >                    4.0d0*u(m,i,j+1,k) + u(m,i,j+2,k))
-               enddo
-               enddo
-         
-            else if (j.eq.ny-3) then
-               do i = 1, nx-2
-               do m = 1, 5
-                  rhs(m,i,j,k) = rhs(m,i,j,k) - dssp *
-     >                    ( u(m,i,j-2,k) - 4.0d0*u(m,i,j-1,k) + 
-     >                    6.0d0*u(m,i,j,k) - 4.0d0*u(m,i,j+1,k) )
-               enddo
-               enddo
+            enddo
+         enddo
 
-            else if (j.eq.ny-2) then
-               do i = 1, nx-2
-               do m = 1, 5
-                  rhs(m,i,j,k) = rhs(m,i,j,k) - dssp *
-     >                    ( u(m,i,j-2,k) - 4.d0*u(m,i,j-1,k) +
-     >                    5.d0*u(m,i,j,k) )
-               enddo
-               enddo
-
-            else
-               do i = 1,nx-2
+         do j = 3, ny-4
+            do i = 1,nx-2
                do m = 1, 5
                   rhs(m,i,j,k) = rhs(m,i,j,k) - dssp * 
      >                    (  u(m,i,j-2,k) - 4.0d0*u(m,i,j-1,k) + 
      >                    6.0*u(m,i,j,k) - 4.0d0*u(m,i,j+1,k) + 
      >                    u(m,i,j+2,k) )
                enddo
-               enddo
-            endif
+            enddo
+         enddo
+         
+         j = ny-3
+         do i = 1, nx-2
+            do m = 1, 5
+               rhs(m,i,j,k) = rhs(m,i,j,k) - dssp *
+     >                    ( u(m,i,j-2,k) - 4.0d0*u(m,i,j-1,k) + 
+     >                    6.0d0*u(m,i,j,k) - 4.0d0*u(m,i,j+1,k) )
+            enddo
+         enddo
+
+         j = ny-2
+         do i = 1, nx-2
+            do m = 1, 5
+               rhs(m,i,j,k) = rhs(m,i,j,k) - dssp *
+     >                    ( u(m,i,j-2,k) - 4.d0*u(m,i,j-1,k) +
+     >                    5.d0*u(m,i,j,k) )
+            enddo
          enddo
       enddo
 !$OMP END DO nowait
@@ -289,7 +298,7 @@ c---------------------------------------------------------------------
 c---------------------------------------------------------------------
 c     compute zeta-direction fluxes 
 c---------------------------------------------------------------------
-!$OMP DO SCHEDULE(STATIC) COLLAPSE(2)
+!$OMP DO SCHEDULE(STATIC)
       do k = 1, nz-2
          do j = 1, ny-2
             do i = 1, nx-2
@@ -339,64 +348,84 @@ c---------------------------------------------------------------------
      >                 (c1*u(5,i,j,k-1) - 
      >                 c2*square(i,j,k-1))*wm1)
             enddo
+         enddo
+      enddo
+!$OMP END DO
 
 c---------------------------------------------------------------------
 c     add fourth order zeta-direction dissipation                
 c---------------------------------------------------------------------
-            if (k.eq.1) then
-               do i = 1, nx-2
-               do m = 1, 5
-                  rhs(m,i,j,k) = rhs(m,i,j,k)- dssp * 
+      k = 1
+!$OMP DO SCHEDULE(STATIC)
+      do j = 1, ny-2
+         do i = 1, nx-2
+            do m = 1, 5
+               rhs(m,i,j,k) = rhs(m,i,j,k)- dssp * 
      >                    ( 5.0d0*u(m,i,j,k) - 4.0d0*u(m,i,j,k+1) +
      >                    u(m,i,j,k+2))
-               enddo
-               enddo
+            enddo
+         enddo
+      enddo
+!$OMP END DO nowait
 
-            else if (k.eq.2) then
-               do i = 1, nx-2
-               do m = 1, 5
-                  rhs(m,i,j,k) = rhs(m,i,j,k) - dssp * 
+      k = 2
+!$OMP DO SCHEDULE(STATIC)
+      do j = 1, ny-2
+         do i = 1, nx-2
+            do m = 1, 5
+               rhs(m,i,j,k) = rhs(m,i,j,k) - dssp * 
      >                    (-4.0d0*u(m,i,j,k-1) + 6.0d0*u(m,i,j,k) -
      >                    4.0d0*u(m,i,j,k+1) + u(m,i,j,k+2))
-               enddo
-               enddo
-         
-            else if (k.eq.nz-3) then
-               do i = 1, nx-2
-               do m = 1, 5
-                  rhs(m,i,j,k) = rhs(m,i,j,k) - dssp *
-     >                    ( u(m,i,j,k-2) - 4.0d0*u(m,i,j,k-1) + 
-     >                    6.0d0*u(m,i,j,k) - 4.0d0*u(m,i,j,k+1) )
-               enddo
-               enddo
-
-            else if (k.eq.nz-2) then
-               do i = 1, nx-2
-               do m = 1, 5
-                  rhs(m,i,j,k) = rhs(m,i,j,k) - dssp *
-     >                    ( u(m,i,j,k-2) - 4.d0*u(m,i,j,k-1) +
-     >                    5.d0*u(m,i,j,k) )
-               enddo
             enddo
+         enddo
+      enddo
+!$OMP END DO nowait
 
-            else
-               do i = 1,nx-2
+!$OMP DO SCHEDULE(STATIC)
+      do k = 3, nz-4
+         do j = 1, ny-2
+            do i = 1,nx-2
                do m = 1, 5
                   rhs(m,i,j,k) = rhs(m,i,j,k) - dssp * 
      >                    (  u(m,i,j,k-2) - 4.0d0*u(m,i,j,k-1) + 
      >                    6.0*u(m,i,j,k) - 4.0d0*u(m,i,j,k+1) + 
      >                    u(m,i,j,k+2) )
                enddo
-               enddo
-            endif
+            enddo
          enddo
       enddo
 !$OMP END DO nowait
+         
+      k = nz-3
+!$OMP DO SCHEDULE(STATIC)
+      do j = 1, ny-2
+         do i = 1, nx-2
+            do m = 1, 5
+               rhs(m,i,j,k) = rhs(m,i,j,k) - dssp *
+     >                    ( u(m,i,j,k-2) - 4.0d0*u(m,i,j,k-1) + 
+     >                    6.0d0*u(m,i,j,k) - 4.0d0*u(m,i,j,k+1) )
+            enddo
+         enddo
+      enddo
+!$OMP END DO nowait
+
+      k = nz-2
+!$OMP DO SCHEDULE(STATIC)
+      do j = 1, ny-2
+         do i = 1, nx-2
+            do m = 1, 5
+               rhs(m,i,j,k) = rhs(m,i,j,k) - dssp *
+     >                    ( u(m,i,j,k-2) - 4.d0*u(m,i,j,k-1) +
+     >                    5.d0*u(m,i,j,k) )
+            enddo
+         enddo
+      enddo
+!$OMP END DO
 !$OMP MASTER
       if (timeron) call timer_stop(t_rhsz)
 !$OMP END MASTER
 
-!$OMP DO SCHEDULE(STATIC) COLLAPSE(2)
+!$OMP DO SCHEDULE(STATIC)
       do k = 1, nz-2
          do j = 1, ny-2
             do i = 1, nx-2

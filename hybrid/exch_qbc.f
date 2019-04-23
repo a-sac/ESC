@@ -1,10 +1,8 @@
        subroutine exch_qbc(u, qbc_ou, qbc_in, nx, nxmax, ny, nz, 
      $                     iprn_msg)
 
-       use bt_data
-       use mpinpb
-
-       implicit none
+       include 'header.h'
+       include 'mpi_stuff.h'
 
        integer   nx(*), nxmax(*), ny(*), nz(*), iprn_msg
        double precision u(*), qbc_ou(*), qbc_in(*)
@@ -74,9 +72,8 @@ c      exchange qbc buffers
              if (num_msgs .eq. 0) num_msgs = 1
              m_size = (c_size + num_msgs - 1)/ num_msgs
 
-             if (iprn_msg .gt. 1)
-     >          write(*,20) myid,ip,num_msgs,m_size
-   20        format(' myid,ip,msgs,msg_size:',2(1x,i6),2(1x,i10))
+             if (iprn_msg .gt. 0)
+     >         write(*,*) 'myid,msgs',myid,ip,num_msgs,m_size
 
              qoffset = qcomm_size(ip+1) - c_size + 1
              tag = MSG_TAG
@@ -116,7 +113,8 @@ c      exchange qbc buffers
              end do
           else if (c_size .lt. 0) then
              write(*,*) 'error: integer overflow', myid, ip, c_size
-             call error_cond(0, ' ')
+             call mpi_abort(MPI_COMM_WORLD, 1, ierror)
+             stop
           endif
 
           if (nr .gt. 0) then
@@ -204,7 +202,7 @@ c      copy data from qbc buffer
        j = jloc
        if (dir(1:2) .eq. 'in') then
 !$OMP PARALLEL DO DEFAULT(SHARED) PRIVATE(m,i,k)
-!$OMP&  SCHEDULE(STATIC) COLLAPSE(2)
+!$OMP&  SHARED(j,nx,nz)
          do k = 1, nz-2
            do i = 1, nx-2
              do m = 1, 5
@@ -215,7 +213,7 @@ c      copy data from qbc buffer
 !$OMP END PARALLEL DO
        else if (dir(1:3) .eq. 'out') then
 !$OMP PARALLEL DO DEFAULT(SHARED) PRIVATE(m,i,k)
-!$OMP&  SCHEDULE(STATIC) COLLAPSE(2)
+!$OMP&  SHARED(j,nx,nz)
          do k = 1, nz-2
            do i = 1, nx-2
              do m = 1, 5
@@ -225,7 +223,8 @@ c      copy data from qbc buffer
          end do
 !$OMP END PARALLEL DO
        else
-         call error_cond(2, dir)
+         write (*,*) 'Erroneous data designation: ', dir
+         stop
        endif
 
        return
@@ -243,7 +242,7 @@ c      copy data from qbc buffer
        i = iloc
        if (dir(1:2) .eq. 'in') then
 !$OMP PARALLEL DO DEFAULT(SHARED) PRIVATE(m,j,k)
-!$OMP&  SCHEDULE(STATIC) COLLAPSE(2)
+!$OMP&  SHARED(i,ny,nz)
          do k = 1, nz-2
            do j = 1, ny-2
              do m = 1, 5
@@ -254,7 +253,7 @@ c      copy data from qbc buffer
 !$OMP END PARALLEL DO
        else if (dir(1:3) .eq. 'out') then
 !$OMP PARALLEL DO DEFAULT(SHARED) PRIVATE(m,j,k)
-!$OMP&  SCHEDULE(STATIC) COLLAPSE(2)
+!$OMP&  SHARED(i,ny,nz)
          do k = 1, nz-2
            do j = 1, ny-2
              do m = 1, 5
@@ -264,7 +263,8 @@ c      copy data from qbc buffer
          end do
 !$OMP END PARALLEL DO
        else
-         call error_cond(2, dir)
+         write (*,*) 'Erroneous data designation: ', dir
+         stop
        endif
 
        return

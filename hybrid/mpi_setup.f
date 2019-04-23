@@ -1,15 +1,14 @@
 c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>c
 c
-      subroutine setup_mpi
+      subroutine mpi_setup
 c
 c  Set up MPI stuff, including
 c     - define the active set of processes
 c     - set up new communicator
 c
-      use bt_data
-      use mpinpb
+      include 'header.h'
 c
-      implicit none
+      include 'mpi_stuff.h'
 c
       integer no_nodes, color
 c
@@ -30,7 +29,15 @@ c     let node 0 be the root for the group (there is only one)
 c---------------------------------------------------------------------
       root = 0
 c
-      if (myid .ge. max_zones) then
+      if (no_nodes .lt. num_procs) then
+         if (myid .eq. root) write(*, 10) no_nodes, num_procs
+   10    format(' Requested MPI processes ',i5,
+     &          ' less than the compiled value ',i5)
+         call mpi_abort(MPI_COMM_WORLD, 1, ierror)
+         stop
+      endif
+c
+      if (myid .ge. num_procs) then
          active = .false.
          color = 1
       else
@@ -41,69 +48,12 @@ c
       call mpi_comm_split(MPI_COMM_WORLD,color,myid,comm_setup,ierror)
       if (.not. active) return
 
-      call mpi_comm_size(comm_setup, num_procs, ierror)
       call mpi_comm_rank(comm_setup, myid, ierror)
       if (no_nodes .ne. num_procs) then
-         if (myid .eq. root) write(*, 20) no_nodes, max_zones, num_procs
-   20    format('Warning: Requested ',i6,' MPI processes exceeds',
-     &          ' the number of zones ',i5/
-     &          'The value ',i5,' is used for benchmarking')
-      endif
-c
-c ... proc size that is a power of two and no less than num_procs
-      num_procs2 = 1
-      do while (num_procs2 .lt. num_procs)
-         num_procs2 = num_procs2 * 2
-      end do
-c
-      return
-      end
-c
-c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>c
-c
-      subroutine env_thread_vars(mp)
-c
-c  Set up thread-related environment variables
-c
-c ... common variables
-      use bt_data
-      use mpinpb
-c
-      implicit none
-c
-      integer mp
-c
-c ... local variables
-      integer ios
-      character envstr*80
-c
-      call get_menv('OMP_NUM_THREADS', envstr, ios)
-      if (ios .gt. 0 .and. mp .gt. 0) then
-         read(envstr,*,iostat=ios) num_threads
-         if (ios.ne.0 .or. num_threads.lt.1) num_threads = 1
-c         if (mp .ne. num_threads) then
-c            write(*, 10) num_threads, mp
-c   10       format(' Warning: Requested ',i4,' threads per process,',
-c     &             ' but the active value is ',i4)
-c            num_threads = mp
-c         endif
-      else
-         num_threads = 1
-      endif
-c
-      call get_menv('NPB_MAX_THREADS', envstr, ios)
-      max_threads = 0
-      if (mz_bload.gt.0 .and. ios.gt.0) then
-         read(envstr,*,iostat=ios) max_threads
-         if (ios.ne.0 .or. max_threads.lt.0) max_threads = 0
-         if (max_threads.gt.0 .and. max_threads.lt.num_threads) then
-            write(*,20) max_threads, num_threads
-   20       format(' Error: max_threads ',i5,
-     &             ' is less than num_threads ',i5/
-     &             ' Please redefine the value for NPB_MAX_THREADS',
-     &             ' or OMP_NUM_THREADS')
-            call error_cond( 0, ' ' )
-         endif
+         if (myid .eq. root) write(*, 20) no_nodes, num_procs
+   20    format('Warning: Requested ',i5,' MPI processes, ',
+     &          'but the compiled value is ',i5/
+     &          'The compiled value is used for benchmarking')
       endif
 c
       return
@@ -116,16 +66,15 @@ c
 c  Set up from environment variables
 c
 c ... common variables
-      use bt_data
-      use mpinpb
-c
-      implicit none
+      include 'header.h'
 c
       integer tot_threads
 c
+      include 'mpi_stuff.h'
+c
 c ... local variables
       integer ios, curr_threads, ip, mp, group, ip1, ip2
-      integer, allocatable :: entry_counts(:)
+      integer entry_counts(num_procs)
       character envstr*80, line*132
 c
 c$    integer omp_get_max_threads
@@ -138,17 +87,26 @@ c ... test the OpenMP multi-threading environment
 c$    mp = omp_get_max_threads()
 c
 c ... master sets up parameters
-      call get_menv('NPB_MZ_BLOAD', envstr, ios)
-      mz_bload_erank = 1
-      if (ios .gt. 0) then
+      call getenv('OMP_NUM_THREADS', envstr)
+      if (envstr .ne. ' ' .and. mp .gt. 0) then
+         read(envstr,*,iostat=ios) num_threads
+         if (ios.ne.0 .or. num_threads.lt.1) num_threads = 1
+         if (mp .ne. num_threads) then
+            write(*, 10) num_threads, mp
+   10       format(' Warning: Requested ',i4,' threads per process,',
+     &             ' but the active value is ',i4)
+            num_threads = mp
+         endif
+      else
+         num_threads = 1
+      endif
+c
+      call getenv('NPB_MZ_BLOAD', envstr)
+      if (envstr .ne. ' ') then
          if (envstr.eq.'on' .or. envstr.eq.'ON') then
             mz_bload = 1
          else if (envstr(1:1).eq.'t' .or. envstr(1:1).eq.'T') then
             mz_bload = 1
-         else if (envstr(1:5).eq.'erank' .or. 
-     &            envstr(1:5).eq.'ERANK') then
-            if (envstr(6:6).eq.'0') mz_bload_erank = 0
-            if (envstr(6:6).eq.'2') mz_bload_erank = 2
          else
             read(envstr,*,iostat=ios) mz_bload
             if (ios.ne.0) mz_bload = 0
@@ -157,14 +115,28 @@ c ... master sets up parameters
          mz_bload = 1
       endif
 c
-      call get_menv('NPB_VERBOSE', envstr, ios)
+      call getenv('NPB_MAX_THREADS', envstr)
+      max_threads = 0
+      if (mz_bload.gt.0 .and. envstr.ne.' ') then
+         read(envstr,*,iostat=ios) max_threads
+         if (ios.ne.0 .or. max_threads.lt.0) max_threads = 0
+         if (max_threads.gt.0 .and. max_threads.lt.num_threads) then
+            write(*,20) max_threads, num_threads
+   20       format(' Error: max_threads ',i5,
+     &             ' is less than num_threads ',i5/
+     &             ' Please redefine the value for NPB_MAX_THREADS',
+     &             ' or OMP_NUM_THREADS')
+            call mpi_abort(MPI_COMM_WORLD, 1, ierror)
+            stop
+         endif
+      endif
+c
+      call getenv('NPB_VERBOSE', envstr)
       npb_verbose = 0
-      if (ios .gt. 0) then
+      if (envstr.ne.' ') then
          read(envstr,*,iostat=ios) npb_verbose
          if (ios.ne.0) npb_verbose = 0
       endif
-c
-      call env_thread_vars(mp)
 c
       do ip = 1, num_procs
          proc_num_threads(ip) = num_threads
@@ -178,15 +150,11 @@ c
          if (mz_bload .ge. 1) then
             mz_bload = -mz_bload
          endif
-         mz_bload_erank = 0
 
-         allocate(entry_counts(num_procs), stat=ip)
          do ip = 1, num_procs
             entry_counts(ip) = 0
          end do
 
-         ip1 = 0
-         ip2 = num_procs - 1
          do while (.true.)
    25       read(2,'(a)',end=40,err=40) line
             if (line.eq.' ' .or. line(1:1).eq.'#') goto 25
@@ -208,72 +176,27 @@ c
                proc_group(ip) = group
                entry_counts(ip) = entry_counts(ip) + 1
             end do
-            ip1 = ip2 + 1
-            ip2 = num_procs - 1
          end do
    40    close(2)
 
          do ip = 1, num_procs
             if (entry_counts(ip) .eq. 0) then
                write(*,*) '*** Error: Missing entry for proc ',ip-1
-               call error_cond( 0, ' ' )
+               call mpi_abort(MPI_COMM_WORLD, 1, ierror)
+               stop
             else if (entry_counts(ip) .gt. 1) then
                write(*,*) '*** Warning: Multiple entries for proc ',
      &                    ip-1, ', only the last one used'
             endif
          end do
 
-         deallocate(entry_counts)
          ip1 = 1
       else
-         write(*,*) 'Use the default load factors'
+         write(*,*) 'Use the default load factors with threads'
          ip1 = 0
-         if (mz_bload_erank .gt. 0) then
-            mz_bload = mp
-            max_threads = 0
-         endif
       endif
-c
-c ... broadcast parameters to all processes
-   80 call mpi_bcast(mz_bload, 1, mpi_integer, root, 
-     &               comm_setup, ierror)
-      call mpi_bcast(mz_bload_erank, 1, mpi_integer, root, 
-     &               comm_setup, ierror)
-      call mpi_bcast(npb_verbose, 1, mpi_integer, root, 
-     &               comm_setup, ierror)
-      call mpi_bcast(proc_group, num_procs, mpi_integer, root, 
-     &               comm_setup, ierror)
-c
-c ... if mz_bload_erank flag is set, we need to read thread flags 
-c     from each rank; otherwise, broadcast the flags from rank 0
-      if (mz_bload_erank .gt. 0) then
-         mp = mz_bload
-         mz_bload = 0
-         if (mz_bload_erank .eq. 2) mz_bload = -2
-         if (myid .ne. root) call env_thread_vars(mp)
-         call mpi_allgather(num_threads, 1, mpi_integer,
-     &                      proc_num_threads, 1, mpi_integer,
-     &                      comm_setup, ierror)
-      else
-         call mpi_bcast(num_threads, 1, mpi_integer, root, 
-     &                  comm_setup, ierror)
-         call mpi_bcast(max_threads, 1, mpi_integer, root, 
-     &                  comm_setup, ierror)
-         call mpi_bcast(proc_num_threads, num_procs, mpi_integer, 
-     &                  root, comm_setup, ierror)
-      endif
-c
-      tot_threads = 0
-      if (mp .gt. 0) then
-         do ip = 1, num_procs
-            tot_threads = tot_threads + proc_num_threads(ip)
-         end do
-      endif
-c
-      if (myid .ne. root) return
-c
-c ... print debug information
-      if (npb_verbose .gt. 0) then
+
+      if (ip1 .gt. 0 .or. npb_verbose .gt. 0) then
          ip1 = 0
          do ip = 1, num_procs
             if (ip .eq. 1 .or.
@@ -298,11 +221,30 @@ c ... print debug information
             endif
          end do
    30    format('  proc',i6,'  num_threads =',i5,
-     &          '  group =',i5)
+     >          '  group =',i5)
       endif
 c
-      if (tot_threads .gt. 0) then
-         write(*, 1004) tot_threads, dble(tot_threads)/num_procs
+c ... broadcast parameters to all processes
+   80 call mpi_bcast(num_threads, 1, mpi_integer, root, 
+     &               comm_setup, ierror)
+      call mpi_bcast(mz_bload, 1, mpi_integer, root, 
+     &               comm_setup, ierror)
+      call mpi_bcast(max_threads, 1, mpi_integer, root, 
+     &               comm_setup, ierror)
+      call mpi_bcast(proc_num_threads, num_procs, mpi_integer, root, 
+     &               comm_setup, ierror)
+      call mpi_bcast(proc_group, num_procs, mpi_integer, root, 
+     &               comm_setup, ierror)
+      call mpi_bcast(npb_verbose, 1, mpi_integer, root, 
+     &               comm_setup, ierror)
+c
+      tot_threads = 0
+      do ip = 1, num_procs
+         tot_threads = tot_threads + proc_num_threads(ip)
+      end do
+      if (myid .eq. root) then
+         if (mp .gt. 0)
+     &      write(*, 1004) tot_threads, dble(tot_threads)/num_procs
       endif
  1004 format(' Total number of threads: ', i6,
      &       '  (', f5.1, ' threads/process)')
@@ -316,7 +258,7 @@ c
       implicit none
 c
 c  decode a line from the load data file
-c  format:  ip1[-ip2|:np] curr_threads group
+c  format:  ip1[:ip2] curr_threads group
 c
       character line*(*)
       integer ip1, ip2, curr_threads, group, ios
@@ -327,28 +269,19 @@ c
 c
       n  = len(line)
       is = 1
-      do while (is.le.n .and. line(is:is).ne.'-' .and. 
-     &          line(is:is).ne.':')
+      do while (is.le.n .and. line(is:is).ne.':')
          if (line(is:is).eq.'!') n = is
          is = is + 1
       end do
 c
-      if (is .gt. n) then	! single <proc#>
+      if (is .gt. n) then
          read(line,*,err=90,end=90) ip1, curr_threads, group
          ip2 = ip1
-      else			! range of procs
-         if (is.gt.1) then	! keep previous value if no <ip1>
-            read(line(:is-1),*,err=90,end=90) ip1
-         endif
-         if (is.eq.n) then	! no <ip2>, read the rest
-            read(line(is+1:),*,err=90,end=90) curr_threads, group
-         else
-            read(line(is+1:),*,err=90,end=90) ip2, curr_threads, group
-            if (line(is:is).eq.':') then
-               if (ip2 .lt. 1) goto 90
-               ip2 = ip1 + ip2 - 1
-            endif
-         endif
+      else if (is.eq.1 .or. is.eq.n) then
+         go to 90
+      else
+         read(line(:is-1),*,err=90,end=90) ip1
+         read(line(is+1:),*,err=90,end=90) ip2, curr_threads, group
       endif
 c
       if (ip2 .lt. ip1) then
@@ -365,10 +298,9 @@ c>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>c
 c
       subroutine get_comm_index(zone, iproc, comm_index)
 c
-      use bt_data
-      use mpinpb
+      include 'header.h'
 c
-      implicit none
+      include 'mpi_stuff.h'
 c
 c  Calculate the communication index of a zone within a processor group
 c
@@ -399,12 +331,11 @@ c
 c
 c  Perform zone-process mapping for load balance
 c
-      use bt_data
-      use mpinpb
-c
-      implicit none
+      include 'header.h'
 c
       integer num_zones, nx(*), ny(*), nz(*), tot_threads
+c
+      include 'mpi_stuff.h'
 c
 c     local variables
       integer z_order(max_zones)
@@ -510,8 +441,8 @@ c  ...   skip the previously assigned zones
       end do
 c
 c ... move threads around if needed
-  150 mz = 1
-      if (tot_threads.le.num_procs .or. mz_bload.lt.1) mz = 0
+      mz = 1
+      if (tot_threads.eq.num_procs .or. mz_bload.lt.1) mz = 0
 c
       if (mz .ne. 0) then
 c
@@ -604,9 +535,9 @@ c ... print the mapping
          end do
       endif
    20 format(/' Zone-process mapping:'/
-     &       '  proc  nzones  zone_size nthreads size_per_thread')
-   25 format(i6,2x,i5,2x,f10.0,2x,i5,3x,f10.0)
-   30 format(3x,'zone',2x,i5,2x,f9.0)
+     &       '  proc nzones  zone_size nthreads size_per_thread')
+   25 format(i5,2x,i5,2x,f10.0,2x,i5,3x,f10.0)
+   30 format(3x,'zone ',i5,2x,f9.0)
 c
       if (myid .eq. root) then
          imx = 1
@@ -632,7 +563,7 @@ c
             write(*,35) 'Min', imn-1, proc_zone_count(imn),
      &                  proc_zone_size(imn),proc_num_threads(imn)
          endif
-   35    format(1x,a,': proc=',i6,' nzones=',i5,' size=',f10.0,
+   35    format(1x,a,': proc=',i5,' nzones=',i5,' size=',f10.0,
      &          ' nthreads=',i5)
 
          write(*,40) tot_size / max_size
@@ -667,7 +598,7 @@ c ... set number of threads for this process
       if (npb_verbose.gt.1) then
          write(*,50) myid, group, np, ipg, proc_num_threads(ipg+1)
       endif
-   50 format(' myid',i6,' group',i5,' group_size',i5,
+   50 format(' myid',i5,' group',i5,' group_size',i5,
      &       ' group_pid',i5,' threads',i4)
 c$    call omp_set_num_threads(proc_num_threads(ipg+1))
 c
