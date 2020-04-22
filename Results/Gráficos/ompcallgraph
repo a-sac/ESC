@@ -1,0 +1,1419 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+# Samples: 5K of event 'cycles'
+# Event count (approx.): 184554103390
+#
+# Children      Self  Command      Shared Object                           Symbol
+# ........  ........  .......  .................  ...............................
+#
+    57.85%    57.63%   is.C.x  is.C.x             [.] rank._omp_fn.4             
+             |
+             --- rank._omp_fn.4
+
+    26.12%     0.00%   is.C.x  [unknown]          [.] 0x41d2309ce5400000         
+             |
+             --- 0x41d2309ce5400000
+
+    24.14%    24.09%   is.C.x  is.C.x             [.] randlc                     
+             |
+             --- randlc
+                |          
+                |--99.79%-- 0x41d2309ce5400000
+                 --0.21%-- [...]
+
+     5.68%     5.66%   is.C.x  libgomp.so.1.0.0   [.] gomp_team_barrier_wait_end 
+             |
+             --- gomp_team_barrier_wait_end
+
+     4.57%     4.57%   is.C.x  is.C.x             [.] full_verify._omp_fn.2      
+             |
+             --- full_verify._omp_fn.2
+
+     4.12%     3.95%   is.C.x  libgomp.so.1.0.0   [.] gomp_barrier_wait_end      
+             |
+             --- gomp_barrier_wait_end
+                |          
+                |--1.87%-- GOMP_parallel
+                |          |          
+                |           --100.00%-- 0x26034e0
+                |          
+                |--0.93%-- GOMP_parallel_loop_dynamic
+                 --97.20%-- [...]
+
+     2.02%     1.37%   is.C.x  is.C.x             [.] create_seq._omp_fn.0       
+             |
+             --- create_seq._omp_fn.0
+                |          
+                |--99.99%-- 0x41d2309ce5400000
+                 --0.01%-- [...]
+
+     1.34%     0.72%   is.C.x  libc-2.12.so       [.] __memset_sse2              
+             |
+             --- __memset_sse2
+
+     1.32%     0.00%   is.C.x  [kernel.kallsyms]  [k] page_fault                 
+             |
+             --- page_fault
+                |          
+                |--49.27%-- create_seq._omp_fn.0
+                |          0x41d2309ce5400000
+                |          
+                |--47.08%-- __memset_sse2
+                |          
+                 --3.65%-- _int_malloc
+
+     1.32%     0.00%   is.C.x  [kernel.kallsyms]  [k] do_page_fault              
+             |
+             --- do_page_fault
+                 page_fault
+                |          
+                |--49.27%-- create_seq._omp_fn.0
+                |          0x41d2309ce5400000
+                |          
+                |--47.08%-- __memset_sse2
+                |          
+                 --3.65%-- _int_malloc
+
+     1.31%     0.00%   is.C.x  [kernel.kallsyms]  [k] __do_page_fault            
+             |
+             --- __do_page_fault
+                 do_page_fault
+                 page_fault
+                |          
+                |--48.78%-- create_seq._omp_fn.0
+                |          0x41d2309ce5400000
+                |          
+                |--47.53%-- __memset_sse2
+                |          
+                 --3.68%-- _int_malloc
+
+     1.31%     0.00%   is.C.x  [kernel.kallsyms]  [k] handle_mm_fault            
+             |
+             --- handle_mm_fault
+                 __do_page_fault
+                 do_page_fault
+                 page_fault
+                |          
+                |--48.78%-- create_seq._omp_fn.0
+                |          0x41d2309ce5400000
+                |          
+                |--47.53%-- __memset_sse2
+                |          
+                 --3.68%-- _int_malloc
+
+     1.24%     0.00%   is.C.x  [kernel.kallsyms]  [k] do_huge_pmd_anonymous_page 
+             |
+             --- do_huge_pmd_anonymous_page
+                 handle_mm_fault
+                 __do_page_fault
+                 do_page_fault
+                 page_fault
+                |          
+                |--51.31%-- create_seq._omp_fn.0
+                |          0x41d2309ce5400000
+                |          
+                 --48.69%-- __memset_sse2
+
+     1.19%     1.19%   is.C.x  [kernel.kallsyms]  [k] clear_page_c_e             
+             |
+             --- clear_page_c_e
+                |          
+                |--95.96%-- do_huge_pmd_anonymous_page
+                |          handle_mm_fault
+                |          __do_page_fault
+                |          do_page_fault
+                |          page_fault
+                |          |          
+                |          |--52.84%-- create_seq._omp_fn.0
+                |          |          0x41d2309ce5400000
+                |          |          
+                |           --47.16%-- __memset_sse2
+                |          
+                 --4.04%-- __alloc_pages_nodemask
+                           alloc_pages_vma
+                           handle_pte_fault
+                           handle_mm_fault
+                           __do_page_fault
+                           do_page_fault
+                           page_fault
+                           _int_malloc
+
+     0.26%     0.02%   is.C.x  [kernel.kallsyms]  [k] apic_timer_interrupt       
+             |
+             --- apic_timer_interrupt
+                |          
+                |--75.60%-- rank._omp_fn.4
+                |          
+                |--18.71%-- randlc
+                |          
+                 --5.69%-- full_verify._omp_fn.3
+
+     0.25%     0.00%   is.C.x  [kernel.kallsyms]  [k] smp_apic_timer_interrupt   
+             |
+             --- smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                |          
+                |--73.98%-- rank._omp_fn.4
+                |          
+                |--19.95%-- randlc
+                |          
+                 --6.07%-- full_verify._omp_fn.3
+
+     0.18%     0.02%   is.C.x  [kernel.kallsyms]  [k] hrtimer_interrupt          
+             |
+             --- hrtimer_interrupt
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                |          
+                |--64.86%-- rank._omp_fn.4
+                |          
+                |--26.94%-- randlc
+                |          
+                 --8.19%-- full_verify._omp_fn.3
+
+     0.17%     0.16%   is.C.x  is.C.x             [.] full_verify._omp_fn.3      
+             |
+             --- full_verify._omp_fn.3
+
+     0.15%     0.00%   is.C.x  [kernel.kallsyms]  [k] __run_hrtimer              
+             |
+             --- __run_hrtimer
+                 hrtimer_interrupt
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                |          
+                |--68.09%-- rank._omp_fn.4
+                |          
+                |--21.92%-- randlc
+                |          
+                 --10.00%-- full_verify._omp_fn.3
+
+     0.12%     0.12%   is.C.x  [kernel.kallsyms]  [k] native_write_msr_safe      
+             |
+             --- native_write_msr_safe
+                |          
+                |--68.47%-- native_apic_msr_write
+                |          smp_invalidate_interrupt
+                |          invalidate_interrupt3
+                |          gomp_barrier_wait_end
+                |          
+                 --31.53%-- intel_pmu_enable_all
+                           x86_pmu_enable
+                           perf_pmu_enable
+                           |          
+                           |--58.07%-- perf_event_context_sched_in
+                           |          |          
+                           |          |--99.83%-- __perf_event_task_sched_in
+                           |          |          finish_task_switch
+                           |          |          |          
+                           |          |          |--93.41%-- thread_return
+                           |          |          |          |          
+                           |          |          |          |--50.79%-- retint_careful
+                           |          |          |          |          |          
+                           |          |          |          |          |--64.35%-- rank._omp_fn.4
+                           |          |          |          |          |          
+                           |          |          |          |          |--24.40%-- randlc
+                           |          |          |          |          |          
+                           |          |          |          |          |--4.29%-- full_verify._omp_fn.2
+                           |          |          |          |          |          
+                           |          |          |          |          |--2.70%-- gomp_barrier_wait_end
+                           |          |          |          |          |          
+                           |          |          |          |          |--2.47%-- gomp_team_barrier_wait_end
+                           |          |          |          |          |          
+                           |          |          |          |           --1.80%-- create_seq._omp_fn.0
+                           |          |          |          |          
+                           |          |          |          |--47.55%-- futex_wait_queue_me
+                           |          |          |          |          futex_wait
+                           |          |          |          |          do_futex
+                           |          |          |          |          sys_futex
+                           |          |          |          |          system_call_fastpath
+                           |          |          |          |          |          
+                           |          |          |          |          |--63.77%-- gomp_team_barrier_wait_end
+                           |          |          |          |          |          
+                           |          |          |          |           --36.23%-- gomp_barrier_wait_end
+                           |          |          |          |                     |          
+                           |          |          |          |                      --100.00%-- GOMP_parallel
+                           |          |          |          |                                |          
+                           |          |          |          |                                 --100.00%-- 0x26034e0
+                           |          |          |          |          
+                           |          |          |          |--1.44%-- sysret_careful
+                           |          |          |          |          gomp_team_barrier_wait_end
+                           |          |          |           --0.21%-- [...]
+                           |          |          |          
+                           |          |           --6.59%-- schedule_tail
+                           |          |                     ret_from_fork
+                           |          |                     __clone
+                           |           --0.17%-- [...]
+                           |          
+                            --41.93%-- perf_event_task_tick
+                                      scheduler_tick
+                                      update_process_times
+                                      tick_sched_timer
+                                      __run_hrtimer
+                                      hrtimer_interrupt
+                                      smp_apic_timer_interrupt
+                                      apic_timer_interrupt
+                                      randlc
+
+     0.12%     0.00%   is.C.x  [kernel.kallsyms]  [k] tick_sched_timer           
+             |
+             --- tick_sched_timer
+                 __run_hrtimer
+                 hrtimer_interrupt
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                |          
+                |--73.05%-- rank._omp_fn.4
+                |          
+                |--14.09%-- randlc
+                |          
+                 --12.86%-- full_verify._omp_fn.3
+
+     0.12%     0.02%   is.C.x  [kernel.kallsyms]  [k] alloc_pages_vma            
+             |
+             --- alloc_pages_vma
+                |          
+                |--58.36%-- do_huge_pmd_anonymous_page
+                |          handle_mm_fault
+                |          __do_page_fault
+                |          do_page_fault
+                |          page_fault
+                |          |          
+                |          |--75.46%-- __memset_sse2
+                |          |          
+                |           --24.54%-- create_seq._omp_fn.0
+                |                     0x41d2309ce5400000
+                |          
+                 --41.64%-- handle_pte_fault
+                           handle_mm_fault
+                           __do_page_fault
+                           do_page_fault
+                           page_fault
+                           _int_malloc
+
+     0.10%     0.00%   is.C.x  [kernel.kallsyms]  [k] system_call_fastpath       
+             |
+             --- system_call_fastpath
+                |          
+                |--78.01%-- gomp_barrier_wait_end
+                |          |          
+                |           --100.00%-- GOMP_parallel
+                |                     |          
+                |                      --100.00%-- 0x26034e0
+                |          
+                 --21.99%-- gomp_team_barrier_wait_end
+
+     0.10%     0.00%   is.C.x  [kernel.kallsyms]  [k] sys_futex                  
+             |
+             --- sys_futex
+                 system_call_fastpath
+                |          
+                |--78.01%-- gomp_barrier_wait_end
+                |          |          
+                |           --100.00%-- GOMP_parallel
+                |                     |          
+                |                      --100.00%-- 0x26034e0
+                |          
+                 --21.99%-- gomp_team_barrier_wait_end
+
+     0.10%     0.00%   is.C.x  [kernel.kallsyms]  [k] do_futex                   
+             |
+             --- do_futex
+                 sys_futex
+                 system_call_fastpath
+                |          
+                |--78.01%-- gomp_barrier_wait_end
+                |          |          
+                |           --100.00%-- GOMP_parallel
+                |                     |          
+                |                      --100.00%-- 0x26034e0
+                |          
+                 --21.99%-- gomp_team_barrier_wait_end
+
+     0.10%     0.00%   is.C.x  [kernel.kallsyms]  [k] update_process_times       
+             |
+             --- update_process_times
+                 tick_sched_timer
+                 __run_hrtimer
+                 hrtimer_interrupt
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                |          
+                |--83.83%-- rank._omp_fn.4
+                |          
+                 --16.17%-- randlc
+
+     0.10%     0.00%   is.C.x  [kernel.kallsyms]  [k] __alloc_pages_nodemask     
+             |
+             --- __alloc_pages_nodemask
+                 alloc_pages_vma
+                |          
+                |--51.40%-- do_huge_pmd_anonymous_page
+                |          handle_mm_fault
+                |          __do_page_fault
+                |          do_page_fault
+                |          page_fault
+                |          __memset_sse2
+                |          
+                 --48.60%-- handle_pte_fault
+                           handle_mm_fault
+                           __do_page_fault
+                           do_page_fault
+                           page_fault
+                           _int_malloc
+
+     0.09%     0.09%   is.C.x  [kernel.kallsyms]  [k] _spin_lock                 
+             |
+             --- _spin_lock
+                |          
+                |--58.98%-- task_rq_lock
+                |          try_to_wake_up
+                |          wake_up_state
+                |          wake_futex
+                |          futex_wake
+                |          do_futex
+                |          sys_futex
+                |          system_call_fastpath
+                |          gomp_barrier_wait_end
+                |          
+                |--23.49%-- try_to_wake_up
+                |          wake_up_state
+                |          wake_futex
+                |          futex_wake
+                |          do_futex
+                |          sys_futex
+                |          system_call_fastpath
+                |          gomp_barrier_wait_end
+                |          
+                 --17.53%-- handle_pte_fault
+                           handle_mm_fault
+                           __do_page_fault
+                           do_page_fault
+                           page_fault
+                           __memset_sse2
+
+     0.09%     0.00%   is.C.x  [kernel.kallsyms]  [k] try_to_wake_up             
+             |
+             --- try_to_wake_up
+                |          
+                |--83.95%-- wake_up_state
+                |          wake_futex
+                |          futex_wake
+                |          do_futex
+                |          sys_futex
+                |          system_call_fastpath
+                |          gomp_barrier_wait_end
+                |          
+                 --16.05%-- default_wake_function
+                           autoremove_wake_function
+                           __wake_up_common
+                           __wake_up
+                           insert_work
+                           __queue_work
+                           delayed_work_timer_fn
+                           run_timer_softirq
+                           __do_softirq
+                           call_softirq
+                           do_softirq
+                           irq_exit
+                           smp_apic_timer_interrupt
+                           apic_timer_interrupt
+                           rank._omp_fn.4
+
+     0.08%     0.00%   is.C.x  [kernel.kallsyms]  [k] invalidate_interrupt3      
+             |
+             --- invalidate_interrupt3
+                 gomp_barrier_wait_end
+
+     0.08%     0.00%   is.C.x  [kernel.kallsyms]  [k] smp_invalidate_interrupt   
+             |
+             --- smp_invalidate_interrupt
+                 invalidate_interrupt3
+                 gomp_barrier_wait_end
+
+     0.08%     0.00%   is.C.x  [kernel.kallsyms]  [k] native_apic_msr_write      
+             |
+             --- native_apic_msr_write
+                 smp_invalidate_interrupt
+                 invalidate_interrupt3
+                 gomp_barrier_wait_end
+
+     0.08%     0.00%   is.C.x  libgomp.so.1.0.0   [.] GOMP_parallel              
+             |
+             --- GOMP_parallel
+                |          
+                |--99.85%-- 0x26034e0
+                 --0.15%-- [...]
+
+     0.08%     0.00%   is.C.x  [kernel.kallsyms]  [k] futex_wake                 
+             |
+             --- futex_wake
+                 do_futex
+                 sys_futex
+                 system_call_fastpath
+                 gomp_barrier_wait_end
+
+     0.08%     0.00%   is.C.x  [kernel.kallsyms]  [k] wake_futex                 
+             |
+             --- wake_futex
+                 futex_wake
+                 do_futex
+                 sys_futex
+                 system_call_fastpath
+                 gomp_barrier_wait_end
+
+     0.08%     0.00%   is.C.x  [kernel.kallsyms]  [k] wake_up_state              
+             |
+             --- wake_up_state
+                 wake_futex
+                 futex_wake
+                 do_futex
+                 sys_futex
+                 system_call_fastpath
+                 gomp_barrier_wait_end
+
+     0.08%     0.00%   is.C.x  [unknown]          [.] 0x00000000026034e0         
+             |
+             --- 0x26034e0
+
+     0.07%     0.00%   is.C.x  [kernel.kallsyms]  [k] scheduler_tick             
+             |
+             --- scheduler_tick
+                 update_process_times
+                 tick_sched_timer
+                 __run_hrtimer
+                 hrtimer_interrupt
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                |          
+                |--76.11%-- rank._omp_fn.4
+                |          
+                 --23.89%-- randlc
+
+     0.07%     0.05%   is.C.x  [kernel.kallsyms]  [k] perf_event_task_tick       
+             |
+             --- perf_event_task_tick
+                 scheduler_tick
+                 update_process_times
+                 tick_sched_timer
+                 __run_hrtimer
+                 hrtimer_interrupt
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                |          
+                |--76.11%-- rank._omp_fn.4
+                |          
+                 --23.89%-- randlc
+
+     0.06%     0.00%   is.C.x  [kernel.kallsyms]  [k] handle_pte_fault           
+             |
+             --- handle_pte_fault
+                 handle_mm_fault
+                 __do_page_fault
+                 do_page_fault
+                 page_fault
+                |          
+                |--74.66%-- _int_malloc
+                |          
+                 --25.34%-- __memset_sse2
+
+     0.05%     0.00%   is.C.x  [kernel.kallsyms]  [k] task_rq_lock               
+             |
+             --- task_rq_lock
+                 try_to_wake_up
+                 wake_up_state
+                 wake_futex
+                 futex_wake
+                 do_futex
+                 sys_futex
+                 system_call_fastpath
+                 gomp_barrier_wait_end
+
+     0.05%     0.05%   is.C.x  [kernel.kallsyms]  [k] get_page_from_freelist     
+             |
+             --- get_page_from_freelist
+                 __alloc_pages_nodemask
+                 alloc_pages_vma
+                 do_huge_pmd_anonymous_page
+                 handle_mm_fault
+                 __do_page_fault
+                 do_page_fault
+                 page_fault
+                 __memset_sse2
+
+     0.05%     0.00%   is.C.x  libc-2.12.so       [.] _int_malloc                
+             |
+             --- _int_malloc
+
+     0.05%     0.00%   is.C.x  [kernel.kallsyms]  [k] irq_exit                   
+             |
+             --- irq_exit
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 rank._omp_fn.4
+
+     0.05%     0.00%   is.C.x  [kernel.kallsyms]  [k] do_softirq                 
+             |
+             --- do_softirq
+                 irq_exit
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 rank._omp_fn.4
+
+     0.05%     0.00%   is.C.x  [kernel.kallsyms]  [k] call_softirq               
+             |
+             --- call_softirq
+                 do_softirq
+                 irq_exit
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 rank._omp_fn.4
+
+     0.04%     0.00%   is.C.x  [kernel.kallsyms]  [k] perf_pmu_enable            
+             |
+             --- perf_pmu_enable
+                |          
+                |--58.34%-- perf_event_context_sched_in
+                |          |          
+                |          |--99.83%-- __perf_event_task_sched_in
+                |          |          finish_task_switch
+                |          |          |          
+                |          |          |--93.48%-- thread_return
+                |          |          |          |          
+                |          |          |          |--51.38%-- retint_careful
+                |          |          |          |          |          
+                |          |          |          |          |--62.85%-- rank._omp_fn.4
+                |          |          |          |          |          
+                |          |          |          |          |--23.83%-- randlc
+                |          |          |          |          |          
+                |          |          |          |          |--4.74%-- gomp_team_barrier_wait_end
+                |          |          |          |          |          
+                |          |          |          |          |--4.19%-- full_verify._omp_fn.2
+                |          |          |          |          |          
+                |          |          |          |          |--2.64%-- gomp_barrier_wait_end
+                |          |          |          |          |          
+                |          |          |          |           --1.76%-- create_seq._omp_fn.0
+                |          |          |          |          
+                |          |          |          |--46.98%-- futex_wait_queue_me
+                |          |          |          |          futex_wait
+                |          |          |          |          do_futex
+                |          |          |          |          sys_futex
+                |          |          |          |          system_call_fastpath
+                |          |          |          |          |          
+                |          |          |          |          |--63.77%-- gomp_team_barrier_wait_end
+                |          |          |          |          |          
+                |          |          |          |           --36.23%-- gomp_barrier_wait_end
+                |          |          |          |                     |          
+                |          |          |          |                      --100.00%-- GOMP_parallel
+                |          |          |          |                                |          
+                |          |          |          |                                 --100.00%-- 0x26034e0
+                |          |          |          |          
+                |          |          |          |--1.43%-- sysret_careful
+                |          |          |          |          gomp_team_barrier_wait_end
+                |          |          |           --0.21%-- [...]
+                |          |          |          
+                |          |           --6.52%-- schedule_tail
+                |          |                     ret_from_fork
+                |          |                     __clone
+                |           --0.17%-- [...]
+                |          
+                 --41.66%-- perf_event_task_tick
+                           scheduler_tick
+                           update_process_times
+                           tick_sched_timer
+                           __run_hrtimer
+                           hrtimer_interrupt
+                           smp_apic_timer_interrupt
+                           apic_timer_interrupt
+                           randlc
+
+     0.04%     0.00%   is.C.x  [kernel.kallsyms]  [k] x86_pmu_enable             
+             |
+             --- x86_pmu_enable
+                 perf_pmu_enable
+                |          
+                |--58.07%-- perf_event_context_sched_in
+                |          |          
+                |          |--99.83%-- __perf_event_task_sched_in
+                |          |          finish_task_switch
+                |          |          |          
+                |          |          |--93.41%-- thread_return
+                |          |          |          |          
+                |          |          |          |--50.79%-- retint_careful
+                |          |          |          |          |          
+                |          |          |          |          |--64.35%-- rank._omp_fn.4
+                |          |          |          |          |          
+                |          |          |          |          |--24.40%-- randlc
+                |          |          |          |          |          
+                |          |          |          |          |--4.29%-- full_verify._omp_fn.2
+                |          |          |          |          |          
+                |          |          |          |          |--2.70%-- gomp_barrier_wait_end
+                |          |          |          |          |          
+                |          |          |          |          |--2.47%-- gomp_team_barrier_wait_end
+                |          |          |          |          |          
+                |          |          |          |           --1.80%-- create_seq._omp_fn.0
+                |          |          |          |          
+                |          |          |          |--47.55%-- futex_wait_queue_me
+                |          |          |          |          futex_wait
+                |          |          |          |          do_futex
+                |          |          |          |          sys_futex
+                |          |          |          |          system_call_fastpath
+                |          |          |          |          |          
+                |          |          |          |          |--63.77%-- gomp_team_barrier_wait_end
+                |          |          |          |          |          
+                |          |          |          |           --36.23%-- gomp_barrier_wait_end
+                |          |          |          |                     |          
+                |          |          |          |                      --100.00%-- GOMP_parallel
+                |          |          |          |                                |          
+                |          |          |          |                                 --100.00%-- 0x26034e0
+                |          |          |          |          
+                |          |          |          |--1.44%-- sysret_careful
+                |          |          |          |          gomp_team_barrier_wait_end
+                |          |          |           --0.21%-- [...]
+                |          |          |          
+                |          |           --6.59%-- schedule_tail
+                |          |                     ret_from_fork
+                |          |                     __clone
+                |           --0.17%-- [...]
+                |          
+                 --41.93%-- perf_event_task_tick
+                           scheduler_tick
+                           update_process_times
+                           tick_sched_timer
+                           __run_hrtimer
+                           hrtimer_interrupt
+                           smp_apic_timer_interrupt
+                           apic_timer_interrupt
+                           randlc
+
+     0.04%     0.00%   is.C.x  [kernel.kallsyms]  [k] intel_pmu_enable_all       
+             |
+             --- intel_pmu_enable_all
+                 x86_pmu_enable
+                 perf_pmu_enable
+                |          
+                |--58.07%-- perf_event_context_sched_in
+                |          |          
+                |          |--99.83%-- __perf_event_task_sched_in
+                |          |          finish_task_switch
+                |          |          |          
+                |          |          |--93.41%-- thread_return
+                |          |          |          |          
+                |          |          |          |--50.79%-- retint_careful
+                |          |          |          |          |          
+                |          |          |          |          |--64.35%-- rank._omp_fn.4
+                |          |          |          |          |          
+                |          |          |          |          |--24.40%-- randlc
+                |          |          |          |          |          
+                |          |          |          |          |--4.29%-- full_verify._omp_fn.2
+                |          |          |          |          |          
+                |          |          |          |          |--2.70%-- gomp_barrier_wait_end
+                |          |          |          |          |          
+                |          |          |          |          |--2.47%-- gomp_team_barrier_wait_end
+                |          |          |          |          |          
+                |          |          |          |           --1.80%-- create_seq._omp_fn.0
+                |          |          |          |          
+                |          |          |          |--47.55%-- futex_wait_queue_me
+                |          |          |          |          futex_wait
+                |          |          |          |          do_futex
+                |          |          |          |          sys_futex
+                |          |          |          |          system_call_fastpath
+                |          |          |          |          |          
+                |          |          |          |          |--63.77%-- gomp_team_barrier_wait_end
+                |          |          |          |          |          
+                |          |          |          |           --36.23%-- gomp_barrier_wait_end
+                |          |          |          |                     |          
+                |          |          |          |                      --100.00%-- GOMP_parallel
+                |          |          |          |                                |          
+                |          |          |          |                                 --100.00%-- 0x26034e0
+                |          |          |          |          
+                |          |          |          |--1.44%-- sysret_careful
+                |          |          |          |          gomp_team_barrier_wait_end
+                |          |          |           --0.21%-- [...]
+                |          |          |          
+                |          |           --6.59%-- schedule_tail
+                |          |                     ret_from_fork
+                |          |                     __clone
+                |           --0.17%-- [...]
+                |          
+                 --41.93%-- perf_event_task_tick
+                           scheduler_tick
+                           update_process_times
+                           tick_sched_timer
+                           __run_hrtimer
+                           hrtimer_interrupt
+                           smp_apic_timer_interrupt
+                           apic_timer_interrupt
+                           randlc
+
+     0.04%     0.00%   is.C.x  libgomp.so.1.0.0   [.] GOMP_parallel_loop_dynamic 
+             |
+             --- GOMP_parallel_loop_dynamic
+
+     0.04%     0.02%   is.C.x  [kernel.kallsyms]  [k] thread_return              
+             |
+             --- thread_return
+                |          
+                |--69.93%-- futex_wait_queue_me
+                |          futex_wait
+                |          do_futex
+                |          sys_futex
+                |          system_call_fastpath
+                |          |          
+                |          |--86.19%-- gomp_team_barrier_wait_end
+                |          |          
+                |           --13.81%-- gomp_barrier_wait_end
+                |                     |          
+                |                      --100.00%-- GOMP_parallel
+                |                                |          
+                |                                 --100.00%-- 0x26034e0
+                |          
+                |--29.14%-- retint_careful
+                |          |          
+                |          |--62.85%-- rank._omp_fn.4
+                |          |          
+                |          |--23.83%-- randlc
+                |          |          
+                |          |--4.74%-- gomp_team_barrier_wait_end
+                |          |          
+                |          |--4.19%-- full_verify._omp_fn.2
+                |          |          
+                |          |--2.64%-- gomp_barrier_wait_end
+                |          |          
+                |           --1.76%-- create_seq._omp_fn.0
+                |          
+                |--0.81%-- sysret_careful
+                |          gomp_team_barrier_wait_end
+                 --0.12%-- [...]
+
+     0.03%     0.03%   is.C.x  [kernel.kallsyms]  [k] rb_next                    
+             |
+             --- rb_next
+                |          
+                |--50.79%-- __remove_hrtimer
+                |          __run_hrtimer
+                |          hrtimer_interrupt
+                |          smp_apic_timer_interrupt
+                |          apic_timer_interrupt
+                |          rank._omp_fn.4
+                |          
+                 --49.21%-- __run_hrtimer
+                           hrtimer_interrupt
+                           smp_apic_timer_interrupt
+                           apic_timer_interrupt
+                           randlc
+
+     0.03%     0.03%   is.C.x  [kernel.kallsyms]  [k] clear_huge_page            
+             |
+             --- clear_huge_page
+                 do_huge_pmd_anonymous_page
+                 handle_mm_fault
+                 __do_page_fault
+                 do_page_fault
+                 page_fault
+                |          
+                |--53.11%-- create_seq._omp_fn.0
+                |          0x41d2309ce5400000
+                |          
+                 --46.89%-- __memset_sse2
+
+     0.03%     0.03%   is.C.x  [kernel.kallsyms]  [k] ktime_get                  
+             |
+             --- ktime_get
+                |          
+                |--52.50%-- hrtimer_interrupt
+                |          smp_apic_timer_interrupt
+                |          apic_timer_interrupt
+                |          rank._omp_fn.4
+                |          
+                 --47.50%-- tick_sched_timer
+                           __run_hrtimer
+                           hrtimer_interrupt
+                           smp_apic_timer_interrupt
+                           apic_timer_interrupt
+                           full_verify._omp_fn.3
+
+     0.03%     0.00%   is.C.x  [kernel.kallsyms]  [k] __do_softirq               
+             |
+             --- __do_softirq
+                 call_softirq
+                 do_softirq
+                 irq_exit
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 rank._omp_fn.4
+
+     0.03%     0.02%   is.C.x  [kernel.kallsyms]  [k] run_timer_softirq          
+             |
+             --- run_timer_softirq
+                 __do_softirq
+                 call_softirq
+                 do_softirq
+                 irq_exit
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 rank._omp_fn.4
+
+     0.03%     0.00%   is.C.x  [kernel.kallsyms]  [k] futex_wait                 
+             |
+             --- futex_wait
+                 do_futex
+                 sys_futex
+                 system_call_fastpath
+                |          
+                |--86.19%-- gomp_team_barrier_wait_end
+                |          
+                 --13.81%-- gomp_barrier_wait_end
+                           |          
+                            --100.00%-- GOMP_parallel
+                                      |          
+                                       --100.00%-- 0x26034e0
+
+     0.03%     0.00%   is.C.x  [kernel.kallsyms]  [k] futex_wait_queue_me        
+             |
+             --- futex_wait_queue_me
+                 futex_wait
+                 do_futex
+                 sys_futex
+                 system_call_fastpath
+                |          
+                |--86.19%-- gomp_team_barrier_wait_end
+                |          
+                 --13.81%-- gomp_barrier_wait_end
+                           |          
+                            --100.00%-- GOMP_parallel
+                                      |          
+                                       --100.00%-- 0x26034e0
+
+     0.02%     0.00%   is.C.x  [unknown]          [k] 0x000000349d6ac727         
+             |
+             --- 0x349d6ac727
+
+     0.02%     0.00%   is.C.x  [kernel.kallsyms]  [k] stub_execve                
+             |
+             --- stub_execve
+                 0x349d6ac727
+
+     0.02%     0.00%   is.C.x  [kernel.kallsyms]  [k] sys_execve                 
+             |
+             --- sys_execve
+                 stub_execve
+                 0x349d6ac727
+
+     0.02%     0.00%   is.C.x  [kernel.kallsyms]  [k] do_execve                  
+             |
+             --- do_execve
+                 sys_execve
+                 stub_execve
+                 0x349d6ac727
+
+     0.02%     0.00%   is.C.x  [kernel.kallsyms]  [k] search_binary_handler      
+             |
+             --- search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 0x349d6ac727
+
+     0.02%     0.00%   is.C.x  [kernel.kallsyms]  [k] load_elf_binary            
+             |
+             --- load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 0x349d6ac727
+
+     0.02%     0.00%   is.C.x  [kernel.kallsyms]  [k] elf_map                    
+             |
+             --- elf_map
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 0x349d6ac727
+
+     0.02%     0.00%   is.C.x  [kernel.kallsyms]  [k] do_mmap_pgoff              
+             |
+             --- do_mmap_pgoff
+                 elf_map
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 0x349d6ac727
+
+     0.02%     0.00%   is.C.x  [kernel.kallsyms]  [k] mmap_region                
+             |
+             --- mmap_region
+                 do_mmap_pgoff
+                 elf_map
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 0x349d6ac727
+
+     0.02%     0.02%   is.C.x  [kernel.kallsyms]  [k] vma_merge                  
+             |
+             --- vma_merge
+                 mmap_region
+                 do_mmap_pgoff
+                 elf_map
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 0x349d6ac727
+
+     0.02%     0.00%   is.C.x  [kernel.kallsyms]  [k] perf_event_context_sched_in
+             |
+             --- perf_event_context_sched_in
+                |          
+                |--99.83%-- __perf_event_task_sched_in
+                |          finish_task_switch
+                |          |          
+                |          |--93.48%-- thread_return
+                |          |          |          
+                |          |          |--51.38%-- retint_careful
+                |          |          |          |          
+                |          |          |          |--62.85%-- rank._omp_fn.4
+                |          |          |          |          
+                |          |          |          |--23.83%-- randlc
+                |          |          |          |          
+                |          |          |          |--4.74%-- gomp_team_barrier_wait_end
+                |          |          |          |          
+                |          |          |          |--4.19%-- full_verify._omp_fn.2
+                |          |          |          |          
+                |          |          |          |--2.64%-- gomp_barrier_wait_end
+                |          |          |          |          
+                |          |          |           --1.76%-- create_seq._omp_fn.0
+                |          |          |          
+                |          |          |--46.98%-- futex_wait_queue_me
+                |          |          |          futex_wait
+                |          |          |          do_futex
+                |          |          |          sys_futex
+                |          |          |          system_call_fastpath
+                |          |          |          |          
+                |          |          |          |--63.77%-- gomp_team_barrier_wait_end
+                |          |          |          |          
+                |          |          |           --36.23%-- gomp_barrier_wait_end
+                |          |          |                     |          
+                |          |          |                      --100.00%-- GOMP_parallel
+                |          |          |                                |          
+                |          |          |                                 --100.00%-- 0x26034e0
+                |          |          |          
+                |          |          |--1.43%-- sysret_careful
+                |          |          |          gomp_team_barrier_wait_end
+                |          |           --0.21%-- [...]
+                |          |          
+                |           --6.52%-- schedule_tail
+                |                     ret_from_fork
+                |                     __clone
+                 --0.17%-- [...]
+
+     0.02%     0.00%   is.C.x  [kernel.kallsyms]  [k] finish_task_switch         
+             |
+             --- finish_task_switch
+                |          
+                |--93.48%-- thread_return
+                |          |          
+                |          |--51.38%-- retint_careful
+                |          |          |          
+                |          |          |--62.85%-- rank._omp_fn.4
+                |          |          |          
+                |          |          |--23.83%-- randlc
+                |          |          |          
+                |          |          |--4.74%-- gomp_team_barrier_wait_end
+                |          |          |          
+                |          |          |--4.19%-- full_verify._omp_fn.2
+                |          |          |          
+                |          |          |--2.64%-- gomp_barrier_wait_end
+                |          |          |          
+                |          |           --1.76%-- create_seq._omp_fn.0
+                |          |          
+                |          |--46.98%-- futex_wait_queue_me
+                |          |          futex_wait
+                |          |          do_futex
+                |          |          sys_futex
+                |          |          system_call_fastpath
+                |          |          |          
+                |          |          |--63.77%-- gomp_team_barrier_wait_end
+                |          |          |          
+                |          |           --36.23%-- gomp_barrier_wait_end
+                |          |                     |          
+                |          |                      --100.00%-- GOMP_parallel
+                |          |                                |          
+                |          |                                 --100.00%-- 0x26034e0
+                |          |          
+                |          |--1.43%-- sysret_careful
+                |          |          gomp_team_barrier_wait_end
+                |           --0.21%-- [...]
+                |          
+                 --6.52%-- schedule_tail
+                           ret_from_fork
+                           __clone
+
+     0.02%     0.00%   is.C.x  [kernel.kallsyms]  [k] __perf_event_task_sched_in 
+             |
+             --- __perf_event_task_sched_in
+                 finish_task_switch
+                |          
+                |--93.48%-- thread_return
+                |          |          
+                |          |--51.38%-- retint_careful
+                |          |          |          
+                |          |          |--62.85%-- rank._omp_fn.4
+                |          |          |          
+                |          |          |--23.83%-- randlc
+                |          |          |          
+                |          |          |--4.74%-- gomp_team_barrier_wait_end
+                |          |          |          
+                |          |          |--4.19%-- full_verify._omp_fn.2
+                |          |          |          
+                |          |          |--2.64%-- gomp_barrier_wait_end
+                |          |          |          
+                |          |           --1.76%-- create_seq._omp_fn.0
+                |          |          
+                |          |--46.98%-- futex_wait_queue_me
+                |          |          futex_wait
+                |          |          do_futex
+                |          |          sys_futex
+                |          |          system_call_fastpath
+                |          |          |          
+                |          |          |--63.77%-- gomp_team_barrier_wait_end
+                |          |          |          
+                |          |           --36.23%-- gomp_barrier_wait_end
+                |          |                     |          
+                |          |                      --100.00%-- GOMP_parallel
+                |          |                                |          
+                |          |                                 --100.00%-- 0x26034e0
+                |          |          
+                |          |--1.43%-- sysret_careful
+                |          |          gomp_team_barrier_wait_end
+                |           --0.21%-- [...]
+                |          
+                 --6.52%-- schedule_tail
+                           ret_from_fork
+                           __clone
+
+     0.02%     0.00%   is.C.x  [kernel.kallsyms]  [k] __remove_hrtimer           
+             |
+             --- __remove_hrtimer
+                 __run_hrtimer
+                 hrtimer_interrupt
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 rank._omp_fn.4
+
+     0.02%     0.00%   is.C.x  [kernel.kallsyms]  [k] irq_enter                  
+             |
+             --- irq_enter
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 rank._omp_fn.4
+
+     0.02%     0.02%   is.C.x  [kernel.kallsyms]  [k] idle_cpu                   
+             |
+             --- idle_cpu
+                 irq_enter
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 rank._omp_fn.4
+
+     0.02%     0.02%   is.C.x  [kernel.kallsyms]  [k] save_args                  
+             |
+             --- save_args
+                 rank._omp_fn.4
+
+     0.02%     0.02%   is.C.x  libgomp.so.1.0.0   [.] gomp_iter_dynamic_next     
+             |
+             --- gomp_iter_dynamic_next
+
+     0.02%     0.02%   is.C.x  [kernel.kallsyms]  [k] rcu_bh_qs                  
+             |
+             --- rcu_bh_qs
+                 call_softirq
+                 do_softirq
+                 irq_exit
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 rank._omp_fn.4
+
+     0.02%     0.00%   is.C.x  [kernel.kallsyms]  [k] rcu_check_callbacks        
+             |
+             --- rcu_check_callbacks
+                 update_process_times
+                 tick_sched_timer
+                 __run_hrtimer
+                 hrtimer_interrupt
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 rank._omp_fn.4
+
+     0.02%     0.02%   is.C.x  [kernel.kallsyms]  [k] raise_softirq              
+             |
+             --- raise_softirq
+                 rcu_check_callbacks
+                 update_process_times
+                 tick_sched_timer
+                 __run_hrtimer
+                 hrtimer_interrupt
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 rank._omp_fn.4
+
+     0.02%     0.00%   is.C.x  [kernel.kallsyms]  [k] account_process_tick       
+             |
+             --- account_process_tick
+                 update_process_times
+                 tick_sched_timer
+                 __run_hrtimer
+                 hrtimer_interrupt
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 rank._omp_fn.4
+
+     0.02%     0.02%   is.C.x  [kernel.kallsyms]  [k] account_user_time          
+             |
+             --- account_user_time
+                 account_process_tick
+                 update_process_times
+                 tick_sched_timer
+                 __run_hrtimer
+                 hrtimer_interrupt
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 rank._omp_fn.4
+
+     0.01%     0.00%   is.C.x  [kernel.kallsyms]  [k] delayed_work_timer_fn      
+             |
+             --- delayed_work_timer_fn
+                 run_timer_softirq
+                 __do_softirq
+                 call_softirq
+                 do_softirq
+                 irq_exit
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 rank._omp_fn.4
+
+     0.01%     0.00%   is.C.x  [kernel.kallsyms]  [k] __queue_work               
+             |
+             --- __queue_work
+                 delayed_work_timer_fn
+                 run_timer_softirq
+                 __do_softirq
+                 call_softirq
+                 do_softirq
+                 irq_exit
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 rank._omp_fn.4
+
+     0.01%     0.00%   is.C.x  [kernel.kallsyms]  [k] insert_work                
+             |
+             --- insert_work
+                 __queue_work
+                 delayed_work_timer_fn
+                 run_timer_softirq
+                 __do_softirq
+                 call_softirq
+                 do_softirq
+                 irq_exit
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 rank._omp_fn.4
+
+     0.01%     0.00%   is.C.x  [kernel.kallsyms]  [k] __wake_up                  
+             |
+             --- __wake_up
+                 insert_work
+                 __queue_work
+                 delayed_work_timer_fn
+                 run_timer_softirq
+                 __do_softirq
+                 call_softirq
+                 do_softirq
+                 irq_exit
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 rank._omp_fn.4
+
+     0.01%     0.00%   is.C.x  [kernel.kallsyms]  [k] __wake_up_common           
+             |
+             --- __wake_up_common
+                 __wake_up
+                 insert_work
+                 __queue_work
+                 delayed_work_timer_fn
+                 run_timer_softirq
+                 __do_softirq
+                 call_softirq
+                 do_softirq
+                 irq_exit
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 rank._omp_fn.4
+
+     0.01%     0.00%   is.C.x  [kernel.kallsyms]  [k] autoremove_wake_function   
+             |
+             --- autoremove_wake_function
+                 __wake_up_common
+                 __wake_up
+                 insert_work
+                 __queue_work
+                 delayed_work_timer_fn
+                 run_timer_softirq
+                 __do_softirq
+                 call_softirq
+                 do_softirq
+                 irq_exit
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 rank._omp_fn.4
+
+     0.01%     0.00%   is.C.x  [kernel.kallsyms]  [k] default_wake_function      
+             |
+             --- default_wake_function
+                 autoremove_wake_function
+                 __wake_up_common
+                 __wake_up
+                 insert_work
+                 __queue_work
+                 delayed_work_timer_fn
+                 run_timer_softirq
+                 __do_softirq
+                 call_softirq
+                 do_softirq
+                 irq_exit
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 rank._omp_fn.4
+
+     0.01%     0.01%   is.C.x  [kernel.kallsyms]  [k] select_task_rq_fair        
+             |
+             --- select_task_rq_fair
+                 try_to_wake_up
+                 default_wake_function
+                 autoremove_wake_function
+                 __wake_up_common
+                 __wake_up
+                 insert_work
+                 __queue_work
+                 delayed_work_timer_fn
+                 run_timer_softirq
+                 __do_softirq
+                 call_softirq
+                 do_softirq
+                 irq_exit
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 rank._omp_fn.4
+
+     0.01%     0.01%   is.C.x  [kernel.kallsyms]  [k] down_read_trylock          
+             |
+             --- down_read_trylock
+                 do_page_fault
+                 page_fault
+                 create_seq._omp_fn.0
+                 0x41d2309ce5400000
+
+     0.01%     0.00%   is.C.x  [kernel.kallsyms]  [k] retint_careful             
+             |
+             --- retint_careful
+                |          
+                |--62.85%-- rank._omp_fn.4
+                |          
+                |--23.83%-- randlc
+                |          
+                |--4.74%-- gomp_team_barrier_wait_end
+                |          
+                |--4.19%-- full_verify._omp_fn.2
+                |          
+                |--2.64%-- gomp_barrier_wait_end
+                |          
+                 --1.76%-- create_seq._omp_fn.0
+
+     0.00%     0.00%   is.C.x  libc-2.12.so       [.] __clone                    
+             |
+             --- __clone
+
+     0.00%     0.00%   is.C.x  [kernel.kallsyms]  [k] ret_from_fork              
+             |
+             --- ret_from_fork
+                 __clone
+
+     0.00%     0.00%   is.C.x  [kernel.kallsyms]  [k] schedule_tail              
+             |
+             --- schedule_tail
+                 ret_from_fork
+                 __clone
+
+     0.00%     0.00%   is.C.x  [kernel.kallsyms]  [k] sysret_careful             
+             |
+             --- sysret_careful
+                 gomp_team_barrier_wait_end
+
+     0.00%     0.00%   is.C.x  [kernel.kallsyms]  [k] _cond_resched              
+             |
+             --- _cond_resched
+                 clear_huge_page
+                 do_huge_pmd_anonymous_page
+                 handle_mm_fault
+                 __do_page_fault
+                 do_page_fault
+                 page_fault
+                 __memset_sse2
+
+     0.00%     0.00%   is.C.x  [kernel.kallsyms]  [k] __cond_resched             
+             |
+             --- __cond_resched
+                 _cond_resched
+                 clear_huge_page
+                 do_huge_pmd_anonymous_page
+                 handle_mm_fault
+                 __do_page_fault
+                 do_page_fault
+                 page_fault
+                 __memset_sse2
+
+     0.00%     0.00%   is.C.x  [kernel.kallsyms]  [k] setup_new_exec             
+             |
+             --- setup_new_exec
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 0x349d6ac727
+
+     0.00%     0.00%   is.C.x  [kernel.kallsyms]  [k] set_task_comm              
+             |
+             --- set_task_comm
+                 setup_new_exec
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 0x349d6ac727
+
+     0.00%     0.00%   is.C.x  [kernel.kallsyms]  [k] perf_event_comm            
+             |
+             --- perf_event_comm
+                 set_task_comm
+                 setup_new_exec
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 0x349d6ac727
+
+
+

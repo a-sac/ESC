@@ -1,0 +1,786 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+# Samples: 3K of event 'cycles'
+# Event count (approx.): 105669998498
+#
+# Children      Self  Command      Shared Object                            Symbol
+# ........  ........  .......  .................  ................................
+#
+    50.02%    49.51%   is.C.x  is.C.x             [.] rank                        
+             |
+             --- rank
+
+    43.56%     0.00%   is.C.x  [unknown]          [.] 0x0000000000603400          
+             |
+             --- 0x603400
+
+    40.42%    40.33%   is.C.x  is.C.x             [.] randlc                      
+             |
+             --- randlc
+                |          
+                |--99.78%-- 0x603400
+                 --0.22%-- [...]
+
+     6.25%     6.22%   is.C.x  is.C.x             [.] full_verify                 
+             |
+             --- full_verify
+
+     3.26%     2.91%   is.C.x  is.C.x             [.] create_seq                  
+             |
+             --- create_seq
+                |          
+                |--99.01%-- 0x603400
+                 --0.99%-- [...]
+
+     0.68%     0.00%   is.C.x  [kernel.kallsyms]  [k] page_fault                  
+             |
+             --- page_fault
+                |          
+                |--52.31%-- rank
+                |          
+                 --47.69%-- create_seq
+                           0x603400
+
+     0.68%     0.00%   is.C.x  [kernel.kallsyms]  [k] do_page_fault               
+             |
+             --- do_page_fault
+                 page_fault
+                |          
+                |--52.31%-- rank
+                |          
+                 --47.69%-- create_seq
+                           0x603400
+
+     0.68%     0.00%   is.C.x  [kernel.kallsyms]  [k] __do_page_fault             
+             |
+             --- __do_page_fault
+                 do_page_fault
+                 page_fault
+                |          
+                |--52.31%-- rank
+                |          
+                 --47.69%-- create_seq
+                           0x603400
+
+     0.68%     0.00%   is.C.x  [kernel.kallsyms]  [k] handle_mm_fault             
+             |
+             --- handle_mm_fault
+                 __do_page_fault
+                 do_page_fault
+                 page_fault
+                |          
+                |--52.31%-- rank
+                |          
+                 --47.69%-- create_seq
+                           0x603400
+
+     0.68%     0.00%   is.C.x  [kernel.kallsyms]  [k] do_huge_pmd_anonymous_page  
+             |
+             --- do_huge_pmd_anonymous_page
+                 handle_mm_fault
+                 __do_page_fault
+                 do_page_fault
+                 page_fault
+                |          
+                |--52.31%-- rank
+                |          
+                 --47.69%-- create_seq
+                           0x603400
+
+     0.62%     0.62%   is.C.x  [kernel.kallsyms]  [k] clear_page_c_e              
+             |
+             --- clear_page_c_e
+                 do_huge_pmd_anonymous_page
+                 handle_mm_fault
+                 __do_page_fault
+                 do_page_fault
+                 page_fault
+                |          
+                |--52.70%-- create_seq
+                |          0x603400
+                |          
+                 --47.30%-- rank
+
+     0.28%     0.03%   is.C.x  [kernel.kallsyms]  [k] apic_timer_interrupt        
+             |
+             --- apic_timer_interrupt
+                |          
+                |--56.73%-- rank
+                |          
+                |--31.77%-- randlc
+                |          
+                 --11.50%-- create_seq
+
+     0.25%     0.00%   is.C.x  [kernel.kallsyms]  [k] smp_apic_timer_interrupt    
+             |
+             --- smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                |          
+                |--51.10%-- rank
+                |          
+                |--35.90%-- randlc
+                |          
+                 --13.00%-- create_seq
+
+     0.18%     0.00%   is.C.x  [kernel.kallsyms]  [k] hrtimer_interrupt           
+             |
+             --- hrtimer_interrupt
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                |          
+                |--51.51%-- rank
+                |          
+                |--30.93%-- randlc
+                |          
+                 --17.56%-- create_seq
+
+     0.18%     0.00%   is.C.x  [kernel.kallsyms]  [k] __run_hrtimer               
+             |
+             --- __run_hrtimer
+                 hrtimer_interrupt
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                |          
+                |--51.51%-- rank
+                |          
+                |--30.93%-- randlc
+                |          
+                 --17.56%-- create_seq
+
+     0.18%     0.00%   is.C.x  [kernel.kallsyms]  [k] tick_sched_timer            
+             |
+             --- tick_sched_timer
+                 __run_hrtimer
+                 hrtimer_interrupt
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                |          
+                |--51.51%-- rank
+                |          
+                |--30.93%-- randlc
+                |          
+                 --17.56%-- create_seq
+
+     0.18%     0.00%   is.C.x  [kernel.kallsyms]  [k] update_process_times        
+             |
+             --- update_process_times
+                 tick_sched_timer
+                 __run_hrtimer
+                 hrtimer_interrupt
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                |          
+                |--51.51%-- rank
+                |          
+                |--30.93%-- randlc
+                |          
+                 --17.56%-- create_seq
+
+     0.15%     0.03%   is.C.x  [kernel.kallsyms]  [k] scheduler_tick              
+             |
+             --- scheduler_tick
+                 update_process_times
+                 tick_sched_timer
+                 __run_hrtimer
+                 hrtimer_interrupt
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                |          
+                |--41.19%-- rank
+                |          
+                |--37.52%-- randlc
+                |          
+                 --21.30%-- create_seq
+
+     0.06%     0.00%   is.C.x  [kernel.kallsyms]  [k] irq_exit                    
+             |
+             --- irq_exit
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                |          
+                |--50.04%-- randlc
+                |          
+                 --49.96%-- rank
+
+     0.06%     0.00%   is.C.x  [kernel.kallsyms]  [k] do_softirq                  
+             |
+             --- do_softirq
+                 irq_exit
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                |          
+                |--50.04%-- randlc
+                |          
+                 --49.96%-- rank
+
+     0.06%     0.00%   is.C.x  [kernel.kallsyms]  [k] call_softirq                
+             |
+             --- call_softirq
+                 do_softirq
+                 irq_exit
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                |          
+                |--50.04%-- randlc
+                |          
+                 --49.96%-- rank
+
+     0.06%     0.00%   is.C.x  [kernel.kallsyms]  [k] __do_softirq                
+             |
+             --- __do_softirq
+                 call_softirq
+                 do_softirq
+                 irq_exit
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                |          
+                |--50.04%-- randlc
+                |          
+                 --49.96%-- rank
+
+     0.06%     0.00%   is.C.x  [kernel.kallsyms]  [k] rcu_process_callbacks       
+             |
+             --- rcu_process_callbacks
+                 __do_softirq
+                 call_softirq
+                 do_softirq
+                 irq_exit
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                |          
+                |--50.04%-- randlc
+                |          
+                 --49.96%-- rank
+
+     0.06%     0.00%   is.C.x  [kernel.kallsyms]  [k] __rcu_process_callbacks     
+             |
+             --- __rcu_process_callbacks
+                 rcu_process_callbacks
+                 __do_softirq
+                 call_softirq
+                 do_softirq
+                 irq_exit
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                |          
+                |--50.04%-- randlc
+                |          
+                 --49.96%-- rank
+
+     0.06%     0.06%   is.C.x  [kernel.kallsyms]  [k] _spin_lock_irqsave          
+             |
+             --- _spin_lock_irqsave
+                 __rcu_process_callbacks
+                 rcu_process_callbacks
+                 __do_softirq
+                 call_softirq
+                 do_softirq
+                 irq_exit
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                |          
+                |--50.04%-- randlc
+                |          
+                 --49.96%-- rank
+
+     0.06%     0.00%   is.C.x  [kernel.kallsyms]  [k] task_tick_fair              
+             |
+             --- task_tick_fair
+                 scheduler_tick
+                 update_process_times
+                 tick_sched_timer
+                 __run_hrtimer
+                 hrtimer_interrupt
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                |          
+                |--50.89%-- create_seq
+                |          
+                 --49.11%-- rank
+
+     0.06%     0.06%   is.C.x  [kernel.kallsyms]  [k] update_cfs_load             
+             |
+             --- update_cfs_load
+                 task_tick_fair
+                 scheduler_tick
+                 update_process_times
+                 tick_sched_timer
+                 __run_hrtimer
+                 hrtimer_interrupt
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                |          
+                |--50.89%-- create_seq
+                |          
+                 --49.11%-- rank
+
+     0.03%     0.00%   is.C.x  [kernel.kallsyms]  [k] retint_careful              
+             |
+             --- retint_careful
+                 full_verify
+
+     0.03%     0.00%   is.C.x  [kernel.kallsyms]  [k] schedule                    
+             |
+             --- schedule
+                 retint_careful
+                 full_verify
+
+     0.03%     0.00%   is.C.x  [kernel.kallsyms]  [k] pick_next_task_fair         
+             |
+             --- pick_next_task_fair
+                 schedule
+                 retint_careful
+                 full_verify
+
+     0.03%     0.00%   is.C.x  [kernel.kallsyms]  [k] set_next_entity             
+             |
+             --- set_next_entity
+                 pick_next_task_fair
+                 schedule
+                 retint_careful
+                 full_verify
+
+     0.03%     0.00%   is.C.x  [kernel.kallsyms]  [k] __dequeue_entity            
+             |
+             --- __dequeue_entity
+                 set_next_entity
+                 pick_next_task_fair
+                 schedule
+                 retint_careful
+                 full_verify
+
+     0.03%     0.03%   is.C.x  [kernel.kallsyms]  [k] rb_erase                    
+             |
+             --- rb_erase
+                 __dequeue_entity
+                 set_next_entity
+                 pick_next_task_fair
+                 schedule
+                 retint_careful
+                 full_verify
+
+     0.03%     0.00%   is.C.x  [kernel.kallsyms]  [k] account_process_tick        
+             |
+             --- account_process_tick
+                 update_process_times
+                 tick_sched_timer
+                 __run_hrtimer
+                 hrtimer_interrupt
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 rank
+
+     0.03%     0.03%   is.C.x  [kernel.kallsyms]  [k] account_user_time           
+             |
+             --- account_user_time
+                 account_process_tick
+                 update_process_times
+                 tick_sched_timer
+                 __run_hrtimer
+                 hrtimer_interrupt
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 rank
+
+     0.03%     0.03%   is.C.x  [kernel.kallsyms]  [k] _spin_lock                  
+             |
+             --- _spin_lock
+                 scheduler_tick
+                 update_process_times
+                 tick_sched_timer
+                 __run_hrtimer
+                 hrtimer_interrupt
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 randlc
+
+     0.03%     0.00%   is.C.x  [kernel.kallsyms]  [k] alloc_pages_vma             
+             |
+             --- alloc_pages_vma
+                 do_huge_pmd_anonymous_page
+                 handle_mm_fault
+                 __do_page_fault
+                 do_page_fault
+                 page_fault
+                 rank
+
+     0.03%     0.00%   is.C.x  [kernel.kallsyms]  [k] __alloc_pages_nodemask      
+             |
+             --- __alloc_pages_nodemask
+                 alloc_pages_vma
+                 do_huge_pmd_anonymous_page
+                 handle_mm_fault
+                 __do_page_fault
+                 do_page_fault
+                 page_fault
+                 rank
+
+     0.03%     0.03%   is.C.x  [kernel.kallsyms]  [k] get_page_from_freelist      
+             |
+             --- get_page_from_freelist
+                 __alloc_pages_nodemask
+                 alloc_pages_vma
+                 do_huge_pmd_anonymous_page
+                 handle_mm_fault
+                 __do_page_fault
+                 do_page_fault
+                 page_fault
+                 rank
+
+     0.03%     0.03%   is.C.x  [kernel.kallsyms]  [k] clear_huge_page             
+             |
+             --- clear_huge_page
+                 do_huge_pmd_anonymous_page
+                 handle_mm_fault
+                 __do_page_fault
+                 do_page_fault
+                 page_fault
+                 rank
+
+     0.03%     0.00%   is.C.x  [kernel.kallsyms]  [k] system_call_fastpath        
+             |
+             --- system_call_fastpath
+
+     0.03%     0.00%   is.C.x  [kernel.kallsyms]  [k] sys_exit_group              
+             |
+             --- sys_exit_group
+                 system_call_fastpath
+
+     0.03%     0.00%   is.C.x  [kernel.kallsyms]  [k] do_group_exit               
+             |
+             --- do_group_exit
+                 sys_exit_group
+                 system_call_fastpath
+
+     0.03%     0.00%   is.C.x  [kernel.kallsyms]  [k] do_exit                     
+             |
+             --- do_exit
+                 do_group_exit
+                 sys_exit_group
+                 system_call_fastpath
+
+     0.03%     0.00%   is.C.x  [kernel.kallsyms]  [k] exit_mm                     
+             |
+             --- exit_mm
+                 do_exit
+                 do_group_exit
+                 sys_exit_group
+                 system_call_fastpath
+
+     0.03%     0.00%   is.C.x  [kernel.kallsyms]  [k] mmput                       
+             |
+             --- mmput
+                 exit_mm
+                 do_exit
+                 do_group_exit
+                 sys_exit_group
+                 system_call_fastpath
+
+     0.03%     0.00%   is.C.x  [kernel.kallsyms]  [k] exit_mmap                   
+             |
+             --- exit_mmap
+                 mmput
+                 exit_mm
+                 do_exit
+                 do_group_exit
+                 sys_exit_group
+                 system_call_fastpath
+
+     0.03%     0.00%   is.C.x  [kernel.kallsyms]  [k] unmap_vmas                  
+             |
+             --- unmap_vmas
+                 exit_mmap
+                 mmput
+                 exit_mm
+                 do_exit
+                 do_group_exit
+                 sys_exit_group
+                 system_call_fastpath
+
+     0.03%     0.00%   is.C.x  [kernel.kallsyms]  [k] zap_huge_pmd                
+             |
+             --- zap_huge_pmd
+                 unmap_vmas
+                 exit_mmap
+                 mmput
+                 exit_mm
+                 do_exit
+                 do_group_exit
+                 sys_exit_group
+                 system_call_fastpath
+
+     0.03%     0.00%   is.C.x  [kernel.kallsyms]  [k] page_remove_rmap            
+             |
+             --- page_remove_rmap
+                 zap_huge_pmd
+                 unmap_vmas
+                 exit_mmap
+                 mmput
+                 exit_mm
+                 do_exit
+                 do_group_exit
+                 sys_exit_group
+                 system_call_fastpath
+
+     0.03%     0.00%   is.C.x  [kernel.kallsyms]  [k] mem_cgroup_uncharge_page    
+             |
+             --- mem_cgroup_uncharge_page
+                 page_remove_rmap
+                 zap_huge_pmd
+                 unmap_vmas
+                 exit_mmap
+                 mmput
+                 exit_mm
+                 do_exit
+                 do_group_exit
+                 sys_exit_group
+                 system_call_fastpath
+
+     0.03%     0.03%   is.C.x  [kernel.kallsyms]  [k] __mem_cgroup_uncharge_common
+             |
+             --- __mem_cgroup_uncharge_common
+                 mem_cgroup_uncharge_page
+                 page_remove_rmap
+                 zap_huge_pmd
+                 unmap_vmas
+                 exit_mmap
+                 mmput
+                 exit_mm
+                 do_exit
+                 do_group_exit
+                 sys_exit_group
+                 system_call_fastpath
+
+     0.02%     0.02%   is.C.x  [kernel.kallsyms]  [k] native_write_msr_safe       
+             |
+             --- native_write_msr_safe
+                |          
+                |--99.86%-- x2apic_send_IPI_mask
+                |          native_smp_send_reschedule
+                |          scheduler_tick
+                |          update_process_times
+                |          tick_sched_timer
+                |          __run_hrtimer
+                |          hrtimer_interrupt
+                |          smp_apic_timer_interrupt
+                |          apic_timer_interrupt
+                |          randlc
+                 --0.14%-- [...]
+
+     0.02%     0.00%   is.C.x  [kernel.kallsyms]  [k] native_smp_send_reschedule  
+             |
+             --- native_smp_send_reschedule
+                 scheduler_tick
+                 update_process_times
+                 tick_sched_timer
+                 __run_hrtimer
+                 hrtimer_interrupt
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 randlc
+
+     0.02%     0.00%   is.C.x  [kernel.kallsyms]  [k] x2apic_send_IPI_mask        
+             |
+             --- x2apic_send_IPI_mask
+                 native_smp_send_reschedule
+                 scheduler_tick
+                 update_process_times
+                 tick_sched_timer
+                 __run_hrtimer
+                 hrtimer_interrupt
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 randlc
+
+     0.01%     0.00%   is.C.x  [unknown]          [k] 0x00000031702ac727          
+             |
+             --- 0x31702ac727
+
+     0.01%     0.00%   is.C.x  [kernel.kallsyms]  [k] stub_execve                 
+             |
+             --- stub_execve
+                 0x31702ac727
+
+     0.01%     0.00%   is.C.x  [kernel.kallsyms]  [k] sys_execve                  
+             |
+             --- sys_execve
+                 stub_execve
+                 0x31702ac727
+
+     0.01%     0.00%   is.C.x  [kernel.kallsyms]  [k] do_execve                   
+             |
+             --- do_execve
+                 sys_execve
+                 stub_execve
+                 0x31702ac727
+
+     0.01%     0.00%   is.C.x  [kernel.kallsyms]  [k] search_binary_handler       
+             |
+             --- search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 0x31702ac727
+
+     0.01%     0.00%   is.C.x  [kernel.kallsyms]  [k] load_elf_binary             
+             |
+             --- load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 0x31702ac727
+
+     0.01%     0.00%   is.C.x  [kernel.kallsyms]  [k] setup_arg_pages             
+             |
+             --- setup_arg_pages
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 0x31702ac727
+
+     0.01%     0.00%   is.C.x  [kernel.kallsyms]  [k] expand_stack                
+             |
+             --- expand_stack
+                 setup_arg_pages
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 0x31702ac727
+
+     0.01%     0.00%   is.C.x  [kernel.kallsyms]  [k] expand_downwards            
+             |
+             --- expand_downwards
+                 expand_stack
+                 setup_arg_pages
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 0x31702ac727
+
+     0.01%     0.00%   is.C.x  [kernel.kallsyms]  [k] perf_event_mmap             
+             |
+             --- perf_event_mmap
+                 expand_downwards
+                 expand_stack
+                 setup_arg_pages
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 0x31702ac727
+
+     0.01%     0.01%   is.C.x  [kernel.kallsyms]  [k] perf_event_mmap_ctx         
+             |
+             --- perf_event_mmap_ctx
+                 perf_event_mmap
+                 expand_downwards
+                 expand_stack
+                 setup_arg_pages
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 0x31702ac727
+
+     0.00%     0.00%   is.C.x  [kernel.kallsyms]  [k] setup_new_exec              
+             |
+             --- setup_new_exec
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 0x31702ac727
+
+     0.00%     0.00%   is.C.x  [kernel.kallsyms]  [k] set_task_comm               
+             |
+             --- set_task_comm
+                 setup_new_exec
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 0x31702ac727
+
+     0.00%     0.00%   is.C.x  [kernel.kallsyms]  [k] perf_event_comm             
+             |
+             --- perf_event_comm
+                 set_task_comm
+                 setup_new_exec
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 0x31702ac727
+
+     0.00%     0.00%   is.C.x  [kernel.kallsyms]  [k] perf_event_context_sched_in 
+             |
+             --- perf_event_context_sched_in
+                 perf_event_comm
+                 set_task_comm
+                 setup_new_exec
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 0x31702ac727
+
+     0.00%     0.00%   is.C.x  [kernel.kallsyms]  [k] perf_pmu_enable             
+             |
+             --- perf_pmu_enable
+                 perf_event_context_sched_in
+                 perf_event_comm
+                 set_task_comm
+                 setup_new_exec
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 0x31702ac727
+
+     0.00%     0.00%   is.C.x  [kernel.kallsyms]  [k] x86_pmu_enable              
+             |
+             --- x86_pmu_enable
+                 perf_pmu_enable
+                 perf_event_context_sched_in
+                 perf_event_comm
+                 set_task_comm
+                 setup_new_exec
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 0x31702ac727
+
+     0.00%     0.00%   is.C.x  [kernel.kallsyms]  [k] intel_pmu_enable_all        
+             |
+             --- intel_pmu_enable_all
+                 x86_pmu_enable
+                 perf_pmu_enable
+                 perf_event_context_sched_in
+                 perf_event_comm
+                 set_task_comm
+                 setup_new_exec
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 0x31702ac727
+
+
+

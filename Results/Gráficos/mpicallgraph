@@ -1,0 +1,1889 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+# Samples: 4K of event 'cycles'
+# Event count (approx.): 127300684787
+#
+# Children      Self  Command         Shared Object                                      Symbol
+# ........  ........  .......  ....................  ..........................................
+#
+    37.45%    37.14%   is.C.4  is.C.4                [.] rank                                  
+             |
+             --- rank
+
+    34.69%    34.58%   is.C.4  is.C.4                [.] randlc                                
+             |
+             --- randlc
+
+     8.05%     8.05%   is.C.4  is.C.4                [.] full_verify                           
+             |
+             --- full_verify
+
+     7.33%     7.33%   is.C.4  libmpi.so.1.0.3       [.] mca_btl_sm_component_progress         
+             |
+             --- mca_btl_sm_component_progress
+
+     5.82%     5.56%   is.C.4  libc-2.12.so          [.] memcpy                                
+             |
+             --- memcpy
+                |          
+                |--25.18%-- ompi_datatype_sndrcv
+                 --74.82%-- [...]
+
+     2.41%     2.24%   is.C.4  is.C.4                [.] create_seq                            
+             |
+             --- create_seq
+
+     2.30%     2.30%   is.C.4  libmpi.so.1.0.3       [.] opal_progress                         
+             |
+             --- opal_progress
+                |          
+                |--4.54%-- _start
+                 --95.46%-- [...]
+
+     1.47%     0.00%   is.C.4  libmpi.so.1.0.3       [.] ompi_datatype_sndrcv                  
+             |
+             --- ompi_datatype_sndrcv
+
+     0.67%     0.65%   is.C.4  libmpi.so.1.0.3       [.] mca_pml_ob1_progress                  
+             |
+             --- mca_pml_ob1_progress
+
+     0.61%     0.00%   is.C.4  [kernel.kallsyms]     [k] page_fault                            
+             |
+             --- page_fault
+                |          
+                |--41.53%-- rank
+                |          
+                |--34.86%-- memcpy
+                |          |          
+                |           --100.00%-- ompi_datatype_sndrcv
+                |          
+                 --23.61%-- create_seq
+
+     0.61%     0.00%   is.C.4  [kernel.kallsyms]     [k] do_page_fault                         
+             |
+             --- do_page_fault
+                 page_fault
+                |          
+                |--41.53%-- rank
+                |          
+                |--34.86%-- memcpy
+                |          |          
+                |           --100.00%-- ompi_datatype_sndrcv
+                |          
+                 --23.61%-- create_seq
+
+     0.61%     0.00%   is.C.4  [kernel.kallsyms]     [k] __do_page_fault                       
+             |
+             --- __do_page_fault
+                 do_page_fault
+                 page_fault
+                |          
+                |--41.53%-- rank
+                |          
+                |--34.86%-- memcpy
+                |          |          
+                |           --100.00%-- ompi_datatype_sndrcv
+                |          
+                 --23.61%-- create_seq
+
+     0.61%     0.00%   is.C.4  [kernel.kallsyms]     [k] handle_mm_fault                       
+             |
+             --- handle_mm_fault
+                 __do_page_fault
+                 do_page_fault
+                 page_fault
+                |          
+                |--41.53%-- rank
+                |          
+                |--34.86%-- memcpy
+                |          |          
+                |           --100.00%-- ompi_datatype_sndrcv
+                |          
+                 --23.61%-- create_seq
+
+     0.61%     0.00%   is.C.4  [kernel.kallsyms]     [k] do_huge_pmd_anonymous_page            
+             |
+             --- do_huge_pmd_anonymous_page
+                 handle_mm_fault
+                 __do_page_fault
+                 do_page_fault
+                 page_fault
+                |          
+                |--41.53%-- rank
+                |          
+                |--34.86%-- memcpy
+                |          |          
+                |           --100.00%-- ompi_datatype_sndrcv
+                |          
+                 --23.61%-- create_seq
+
+     0.61%     0.61%   is.C.4  [kernel.kallsyms]     [k] clear_page_c_e                        
+             |
+             --- clear_page_c_e
+                 do_huge_pmd_anonymous_page
+                 handle_mm_fault
+                 __do_page_fault
+                 do_page_fault
+                 page_fault
+                |          
+                |--41.53%-- rank
+                |          
+                |--34.86%-- memcpy
+                |          |          
+                |           --100.00%-- ompi_datatype_sndrcv
+                |          
+                 --23.61%-- create_seq
+
+     0.22%     0.02%   is.C.4  [kernel.kallsyms]     [k] apic_timer_interrupt                  
+             |
+             --- apic_timer_interrupt
+                |          
+                |--51.22%-- randlc
+                |          
+                |--27.78%-- rank
+                |          
+                |--11.76%-- mca_pml_ob1_progress
+                |          
+                 --9.24%-- memcpy
+
+     0.20%     0.00%   is.C.4  [kernel.kallsyms]     [k] smp_apic_timer_interrupt              
+             |
+             --- smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                |          
+                |--56.45%-- randlc
+                |          
+                |--20.41%-- rank
+                |          
+                |--12.96%-- mca_pml_ob1_progress
+                |          
+                 --10.18%-- memcpy
+
+     0.16%     0.16%   is.C.4  libc-2.12.so          [.] __strcmp_sse42                        
+             |
+             --- __strcmp_sse42
+
+     0.14%     0.11%   mpirun  [kernel.kallsyms]     [k] page_fault                            
+             |
+             --- page_fault
+                |          
+                |--75.41%-- sysfs_read_file
+                |          vfs_read
+                |          sys_read
+                |          system_call_fastpath
+                |          __read_nocancel
+                |          
+                |--17.39%-- _IO_vasprintf
+                |          
+                 --7.20%-- __nptl_set_robust
+                           odls_default_fork_local_proc
+
+     0.14%     0.14%   mpirun  libopen-rte.so.4.0.0  [.] opal_memory_ptmalloc2_int_malloc      
+             |
+             --- opal_memory_ptmalloc2_int_malloc
+
+     0.13%     0.00%   is.C.4  is.C.4                [.] _start                                
+             |
+             --- _start
+
+     0.13%     0.13%   is.C.4  libmpi.so.1.0.3       [.] ompi_request_default_wait_all         
+             |
+             --- ompi_request_default_wait_all
+
+     0.13%     0.00%   mpirun  [kernel.kallsyms]     [k] stub_execve                           
+             |
+             --- stub_execve
+                 0x31702ac727
+                |          
+                |--9.51%-- 0x0
+                |          
+                |--8.51%-- 0x866050
+                 --81.99%-- [...]
+
+     0.13%     0.00%   mpirun  [kernel.kallsyms]     [k] sys_execve                            
+             |
+             --- sys_execve
+                 stub_execve
+                 0x31702ac727
+                |          
+                |--9.51%-- 0x0
+                |          
+                |--8.51%-- 0x866050
+                 --81.99%-- [...]
+
+     0.13%     0.00%   mpirun  [kernel.kallsyms]     [k] do_execve                             
+             |
+             --- do_execve
+                 sys_execve
+                 stub_execve
+                 0x31702ac727
+                |          
+                |--9.51%-- 0x0
+                |          
+                |--8.51%-- 0x866050
+                 --81.99%-- [...]
+
+     0.13%     0.13%   is.C.4  libmpi.so.1.0.3       [.] opal_memory_linux_free_hook           
+             |
+             --- opal_memory_linux_free_hook
+
+     0.12%     0.00%   mpirun  libc-2.12.so          [.] __execve                              
+             |
+             --- __execve
+                |          
+                |--10.27%-- 0x0
+                |          
+                |--9.20%-- 0x866050
+                 --80.53%-- [...]
+
+     0.11%     0.00%   mpirun  [kernel.kallsyms]     [k] system_call_fastpath                  
+             |
+             --- system_call_fastpath
+                |          
+                |--99.57%-- __read_nocancel
+                 --0.43%-- [...]
+
+     0.11%     0.00%   mpirun  [kernel.kallsyms]     [k] sys_read                              
+             |
+             --- sys_read
+                 system_call_fastpath
+                |          
+                |--99.82%-- __read_nocancel
+                 --0.18%-- [...]
+
+     0.11%     0.00%   mpirun  [kernel.kallsyms]     [k] vfs_read                              
+             |
+             --- vfs_read
+                 sys_read
+                 system_call_fastpath
+                |          
+                |--99.82%-- __read_nocancel
+                 --0.18%-- [...]
+
+     0.11%     0.00%   mpirun  libc-2.12.so          [.] __read_nocancel                       
+             |
+             --- __read_nocancel
+
+     0.11%     0.00%   mpirun  [kernel.kallsyms]     [k] sysfs_read_file                       
+             |
+             --- sysfs_read_file
+                 vfs_read
+                 sys_read
+                 system_call_fastpath
+                 __read_nocancel
+
+     0.11%     0.00%   mpirun  [kernel.kallsyms]     [k] search_binary_handler                 
+             |
+             --- search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 0x31702ac727
+
+     0.11%     0.00%   mpirun  [kernel.kallsyms]     [k] load_elf_binary                       
+             |
+             --- load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 0x31702ac727
+
+     0.10%     0.10%   is.C.4  libmpi.so.1.0.3       [.] opal_progress@plt                     
+             |
+             --- opal_progress@plt
+
+     0.10%     0.10%   mpirun  libopen-rte.so.4.0.0  [.] mca_base_param_find                   
+             |
+             --- mca_base_param_find
+
+     0.10%     0.00%   mpirun  [kernel.kallsyms]     [k] flush_old_exec                        
+             |
+             --- flush_old_exec
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 __execve
+
+     0.10%     0.00%   mpirun  [kernel.kallsyms]     [k] mmput                                 
+             |
+             --- mmput
+                 flush_old_exec
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 __execve
+
+     0.10%     0.00%   mpirun  [kernel.kallsyms]     [k] exit_mmap                             
+             |
+             --- exit_mmap
+                 mmput
+                 flush_old_exec
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 __execve
+
+     0.09%     0.00%   is.C.4  [kernel.kallsyms]     [k] hrtimer_interrupt                     
+             |
+             --- hrtimer_interrupt
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 randlc
+
+     0.09%     0.00%   is.C.4  [kernel.kallsyms]     [k] __run_hrtimer                         
+             |
+             --- __run_hrtimer
+                 hrtimer_interrupt
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 randlc
+
+     0.09%     0.00%   is.C.4  [kernel.kallsyms]     [k] tick_sched_timer                      
+             |
+             --- tick_sched_timer
+                 __run_hrtimer
+                 hrtimer_interrupt
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 randlc
+
+     0.09%     0.00%   is.C.4  [kernel.kallsyms]     [k] update_process_times                  
+             |
+             --- update_process_times
+                 tick_sched_timer
+                 __run_hrtimer
+                 hrtimer_interrupt
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 randlc
+
+     0.09%     0.00%   mpirun  [kernel.kallsyms]     [k] lru_add_drain                         
+             |
+             --- lru_add_drain
+                 exit_mmap
+                 mmput
+                 flush_old_exec
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 __execve
+
+     0.09%     0.00%   mpirun  [kernel.kallsyms]     [k] ____pagevec_lru_add                   
+             |
+             --- ____pagevec_lru_add
+                 lru_add_drain
+                 exit_mmap
+                 mmput
+                 flush_old_exec
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 __execve
+
+     0.09%     0.00%   mpirun  [kernel.kallsyms]     [k] release_pages                         
+             |
+             --- release_pages
+                 ____pagevec_lru_add
+                 lru_add_drain
+                 exit_mmap
+                 mmput
+                 flush_old_exec
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 __execve
+
+     0.09%     0.00%   mpirun  [kernel.kallsyms]     [k] put_compound_page                     
+             |
+             --- put_compound_page
+                 release_pages
+                 ____pagevec_lru_add
+                 lru_add_drain
+                 exit_mmap
+                 mmput
+                 flush_old_exec
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 __execve
+
+     0.09%     0.00%   mpirun  [kernel.kallsyms]     [k] __put_compound_page                   
+             |
+             --- __put_compound_page
+                 put_compound_page
+                 release_pages
+                 ____pagevec_lru_add
+                 lru_add_drain
+                 exit_mmap
+                 mmput
+                 flush_old_exec
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 __execve
+
+     0.09%     0.00%   mpirun  [kernel.kallsyms]     [k] free_compound_page                    
+             |
+             --- free_compound_page
+                 __put_compound_page
+                 put_compound_page
+                 release_pages
+                 ____pagevec_lru_add
+                 lru_add_drain
+                 exit_mmap
+                 mmput
+                 flush_old_exec
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 __execve
+
+     0.09%     0.09%   mpirun  [kernel.kallsyms]     [k] __free_pages_ok                       
+             |
+             --- __free_pages_ok
+                 free_compound_page
+                 __put_compound_page
+                 put_compound_page
+                 release_pages
+                 ____pagevec_lru_add
+                 lru_add_drain
+                 exit_mmap
+                 mmput
+                 flush_old_exec
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 __execve
+
+     0.07%     0.02%   is.C.4  [kernel.kallsyms]     [k] scheduler_tick                        
+             |
+             --- scheduler_tick
+                 update_process_times
+                 tick_sched_timer
+                 __run_hrtimer
+                 hrtimer_interrupt
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 randlc
+
+     0.06%     0.00%   mpirun  libc-2.12.so          [.] __poll                                
+             |
+             --- __poll
+
+     0.06%     0.06%   mpirun  [kernel.kallsyms]     [k] audit_syscall_entry                   
+             |
+             --- audit_syscall_entry
+                 __poll
+
+     0.05%     0.00%   is.C.4  [kernel.kallsyms]     [k] retint_careful                        
+             |
+             --- retint_careful
+                |          
+                |--50.03%-- create_seq
+                |          
+                 --49.97%-- memcpy
+
+     0.05%     0.03%   is.C.4  [kernel.kallsyms]     [k] schedule                              
+             |
+             --- schedule
+                 retint_careful
+                |          
+                |--50.03%-- create_seq
+                |          
+                 --49.97%-- memcpy
+
+     0.05%     0.05%   is.C.4  [kernel.kallsyms]     [k] native_write_msr_safe                 
+             |
+             --- native_write_msr_safe
+                |          
+                |--55.80%-- native_apic_msr_write
+                |          smp_apic_timer_interrupt
+                |          apic_timer_interrupt
+                |          randlc
+                |          
+                 --44.20%-- intel_pmu_disable_all
+                           x86_pmu_disable
+                           perf_pmu_disable
+                           perf_event_task_tick
+                           scheduler_tick
+                           update_process_times
+                           tick_sched_timer
+                           __run_hrtimer
+                           hrtimer_interrupt
+                           smp_apic_timer_interrupt
+                           apic_timer_interrupt
+                           randlc
+
+     0.04%     0.04%   is.C.4  libmpi.so.1.0.3       [.] param_register.clone.0                
+             |
+             --- param_register.clone.0
+
+     0.04%     0.00%   is.C.4  [kernel.kallsyms]     [k] irq_exit                              
+             |
+             --- irq_exit
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 rank
+
+     0.04%     0.00%   is.C.4  [kernel.kallsyms]     [k] do_softirq                            
+             |
+             --- do_softirq
+                 irq_exit
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 rank
+
+     0.04%     0.00%   is.C.4  [kernel.kallsyms]     [k] call_softirq                          
+             |
+             --- call_softirq
+                 do_softirq
+                 irq_exit
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 rank
+
+     0.04%     0.02%   is.C.4  [kernel.kallsyms]     [k] __do_softirq                          
+             |
+             --- __do_softirq
+                 call_softirq
+                 do_softirq
+                 irq_exit
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 rank
+
+     0.04%     0.00%   mpirun  [kernel.kallsyms]     [k] do_page_fault                         
+             |
+             --- do_page_fault
+                 page_fault
+                |          
+                |--70.71%-- _IO_vasprintf
+                |          
+                 --29.29%-- __nptl_set_robust
+                           odls_default_fork_local_proc
+
+     0.04%     0.00%   mpirun  [kernel.kallsyms]     [k] __do_page_fault                       
+             |
+             --- __do_page_fault
+                 do_page_fault
+                 page_fault
+                |          
+                |--70.71%-- _IO_vasprintf
+                |          
+                 --29.29%-- __nptl_set_robust
+                           odls_default_fork_local_proc
+
+     0.03%     0.00%   mpirun  [kernel.kallsyms]     [k] handle_mm_fault                       
+             |
+             --- handle_mm_fault
+                |          
+                |--68.77%-- __get_user_pages
+                |          get_user_pages
+                |          get_arg_page
+                |          copy_strings
+                |          copy_strings_kernel
+                |          do_execve
+                |          sys_execve
+                |          stub_execve
+                |          __execve
+                |          |          
+                |          |--52.24%-- 0x0
+                |          |          
+                |           --47.76%-- 0x866050
+                |          
+                 --31.23%-- __do_page_fault
+                           do_page_fault
+                           page_fault
+                           __nptl_set_robust
+                           odls_default_fork_local_proc
+
+     0.03%     0.00%   mpirun  [kernel.kallsyms]     [k] handle_pte_fault                      
+             |
+             --- handle_pte_fault
+                 handle_mm_fault
+                |          
+                |--68.77%-- __get_user_pages
+                |          get_user_pages
+                |          get_arg_page
+                |          copy_strings
+                |          copy_strings_kernel
+                |          do_execve
+                |          sys_execve
+                |          stub_execve
+                |          __execve
+                |          |          
+                |          |--52.24%-- 0x0
+                |          |          
+                |           --47.76%-- 0x866050
+                |          
+                 --31.23%-- __do_page_fault
+                           do_page_fault
+                           page_fault
+                           __nptl_set_robust
+                           odls_default_fork_local_proc
+
+     0.03%     0.03%   is.C.4  [kernel.kallsyms]     [k] tick_program_event                    
+             |
+             --- tick_program_event
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 mca_pml_ob1_progress
+
+     0.03%     0.03%   is.C.4  libmpi.so.1.0.3       [.] ompi_request_default_wait             
+             |
+             --- ompi_request_default_wait
+                 _start
+
+     0.03%     0.00%   is.C.4  [kernel.kallsyms]     [k] pick_next_task_fair                   
+             |
+             --- pick_next_task_fair
+                 schedule
+                 retint_careful
+                 memcpy
+
+     0.03%     0.03%   is.C.4  [kernel.kallsyms]     [k] update_stats_wait_end                 
+             |
+             --- update_stats_wait_end
+                 pick_next_task_fair
+                 schedule
+                 retint_careful
+                 memcpy
+
+     0.03%     0.03%   is.C.4  libmpi.so.1.0.3       [.] mca_pml_ob1_recv_request_progress_frag
+             |
+             --- mca_pml_ob1_recv_request_progress_frag
+
+     0.03%     0.03%   is.C.4  libmpi.so.1.0.3       [.] opal_convertor_unpack                 
+             |
+             --- opal_convertor_unpack
+
+     0.03%     0.03%   is.C.4  [kernel.kallsyms]     [k] _spin_lock                            
+             |
+             --- _spin_lock
+                 scheduler_tick
+                 update_process_times
+                 tick_sched_timer
+                 __run_hrtimer
+                 hrtimer_interrupt
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 randlc
+
+     0.03%     0.00%   is.C.4  [kernel.kallsyms]     [k] native_apic_msr_write                 
+             |
+             --- native_apic_msr_write
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 randlc
+
+     0.03%     0.00%   mpirun  libc-2.12.so          [.] _IO_vasprintf                         
+             |
+             --- _IO_vasprintf
+
+     0.03%     0.03%   mpirun  [kernel.kallsyms]     [k] up_read                               
+             |
+             --- up_read
+                 __do_page_fault
+                 do_page_fault
+                 page_fault
+                 _IO_vasprintf
+
+     0.02%     0.00%   mpirun  [kernel.kallsyms]     [k] copy_strings_kernel                   
+             |
+             --- copy_strings_kernel
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 __execve
+                |          
+                |--52.24%-- 0x0
+                |          
+                 --47.76%-- 0x866050
+
+     0.02%     0.00%   mpirun  [kernel.kallsyms]     [k] copy_strings                          
+             |
+             --- copy_strings
+                 copy_strings_kernel
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 __execve
+                |          
+                |--52.24%-- 0x0
+                |          
+                 --47.76%-- 0x866050
+
+     0.02%     0.00%   mpirun  [kernel.kallsyms]     [k] get_arg_page                          
+             |
+             --- get_arg_page
+                 copy_strings
+                 copy_strings_kernel
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 __execve
+                |          
+                |--52.24%-- 0x0
+                |          
+                 --47.76%-- 0x866050
+
+     0.02%     0.00%   mpirun  [kernel.kallsyms]     [k] get_user_pages                        
+             |
+             --- get_user_pages
+                 get_arg_page
+                 copy_strings
+                 copy_strings_kernel
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 __execve
+                |          
+                |--52.24%-- 0x0
+                |          
+                 --47.76%-- 0x866050
+
+     0.02%     0.00%   mpirun  [kernel.kallsyms]     [k] __get_user_pages                      
+             |
+             --- __get_user_pages
+                 get_user_pages
+                 get_arg_page
+                 copy_strings
+                 copy_strings_kernel
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 __execve
+                |          
+                |--52.24%-- 0x0
+                |          
+                 --47.76%-- 0x866050
+
+     0.02%     0.00%   is.C.4  [kernel.kallsyms]     [k] account_process_tick                  
+             |
+             --- account_process_tick
+                 update_process_times
+                 tick_sched_timer
+                 __run_hrtimer
+                 hrtimer_interrupt
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 randlc
+
+     0.02%     0.02%   is.C.4  [kernel.kallsyms]     [k] account_user_time                     
+             |
+             --- account_user_time
+                 account_process_tick
+                 update_process_times
+                 tick_sched_timer
+                 __run_hrtimer
+                 hrtimer_interrupt
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 randlc
+
+     0.02%     0.00%   is.C.4  [kernel.kallsyms]     [k] perf_event_task_tick                  
+             |
+             --- perf_event_task_tick
+                 scheduler_tick
+                 update_process_times
+                 tick_sched_timer
+                 __run_hrtimer
+                 hrtimer_interrupt
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 randlc
+
+     0.02%     0.00%   is.C.4  [kernel.kallsyms]     [k] perf_pmu_disable                      
+             |
+             --- perf_pmu_disable
+                 perf_event_task_tick
+                 scheduler_tick
+                 update_process_times
+                 tick_sched_timer
+                 __run_hrtimer
+                 hrtimer_interrupt
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 randlc
+
+     0.02%     0.00%   is.C.4  [kernel.kallsyms]     [k] x86_pmu_disable                       
+             |
+             --- x86_pmu_disable
+                 perf_pmu_disable
+                 perf_event_task_tick
+                 scheduler_tick
+                 update_process_times
+                 tick_sched_timer
+                 __run_hrtimer
+                 hrtimer_interrupt
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 randlc
+
+     0.02%     0.00%   is.C.4  [kernel.kallsyms]     [k] intel_pmu_disable_all                 
+             |
+             --- intel_pmu_disable_all
+                 x86_pmu_disable
+                 perf_pmu_disable
+                 perf_event_task_tick
+                 scheduler_tick
+                 update_process_times
+                 tick_sched_timer
+                 __run_hrtimer
+                 hrtimer_interrupt
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 randlc
+
+     0.02%     0.00%   is.C.4  [kernel.kallsyms]     [k] run_rebalance_domains                 
+             |
+             --- run_rebalance_domains
+                 __do_softirq
+                 call_softirq
+                 do_softirq
+                 irq_exit
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 rank
+
+     0.02%     0.02%   is.C.4  [kernel.kallsyms]     [k] rebalance_domains                     
+             |
+             --- rebalance_domains
+                 run_rebalance_domains
+                 __do_softirq
+                 call_softirq
+                 do_softirq
+                 irq_exit
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 rank
+
+     0.02%     0.02%   is.C.4  libmpi.so.1.0.3       [.] mca_pml_ob1_frag_completion           
+             |
+             --- mca_pml_ob1_frag_completion
+
+     0.02%     0.02%   is.C.4  libmpi.so.1.0.3       [.] mca_btl_sm_send                       
+             |
+             --- mca_btl_sm_send
+
+     0.02%     0.00%   is.C.4  [kernel.kallsyms]     [k] irq_enter                             
+             |
+             --- irq_enter
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 memcpy
+
+     0.02%     0.02%   is.C.4  [kernel.kallsyms]     [k] rcu_irq_enter                         
+             |
+             --- rcu_irq_enter
+                 irq_enter
+                 smp_apic_timer_interrupt
+                 apic_timer_interrupt
+                 memcpy
+
+     0.02%     0.00%   mpirun  libopen-rte.so.4.0.0  [.] odls_default_fork_local_proc          
+             |
+             --- odls_default_fork_local_proc
+
+     0.01%     0.00%   mpirun  [unknown]             [.] 0000000000000000                      
+             |
+             --- (nil)
+
+     0.01%     0.00%   mpirun  [kernel.kallsyms]     [k] alloc_pages_vma                       
+             |
+             --- alloc_pages_vma
+                 handle_pte_fault
+                 handle_mm_fault
+                 __get_user_pages
+                 get_user_pages
+                 get_arg_page
+                 copy_strings
+                 copy_strings_kernel
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 __execve
+                 (nil)
+
+     0.01%     0.01%   mpirun  [kernel.kallsyms]     [k] __alloc_pages_nodemask                
+             |
+             --- __alloc_pages_nodemask
+                 alloc_pages_vma
+                 handle_pte_fault
+                 handle_mm_fault
+                 __get_user_pages
+                 get_user_pages
+                 get_arg_page
+                 copy_strings
+                 copy_strings_kernel
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 __execve
+                 (nil)
+
+     0.01%     0.00%   mpirun  [unknown]             [.] 0x0000000000866050                    
+             |
+             --- 0x866050
+
+     0.01%     0.00%   mpirun  [kernel.kallsyms]     [k] expand_stack                          
+             |
+             --- expand_stack
+                 handle_pte_fault
+                 handle_mm_fault
+                 __get_user_pages
+                 get_user_pages
+                 get_arg_page
+                 copy_strings
+                 copy_strings_kernel
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 __execve
+                 0x866050
+
+     0.01%     0.00%   mpirun  [kernel.kallsyms]     [k] expand_downwards                      
+             |
+             --- expand_downwards
+                 expand_stack
+                 handle_pte_fault
+                 handle_mm_fault
+                 __get_user_pages
+                 get_user_pages
+                 get_arg_page
+                 copy_strings
+                 copy_strings_kernel
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 __execve
+                 0x866050
+
+     0.01%     0.01%   mpirun  [kernel.kallsyms]     [k] perf_event_mmap                       
+             |
+             --- perf_event_mmap
+                 expand_downwards
+                 expand_stack
+                 handle_pte_fault
+                 handle_mm_fault
+                 __get_user_pages
+                 get_user_pages
+                 get_arg_page
+                 copy_strings
+                 copy_strings_kernel
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 __execve
+                 0x866050
+
+     0.01%     0.00%   mpirun  libpthread-2.12.so    [.] __nptl_set_robust                     
+             |
+             --- __nptl_set_robust
+                 odls_default_fork_local_proc
+
+     0.01%     0.00%   mpirun  [kernel.kallsyms]     [k] __do_fault                            
+             |
+             --- __do_fault
+                 handle_pte_fault
+                 handle_mm_fault
+                 __do_page_fault
+                 do_page_fault
+                 page_fault
+                 __nptl_set_robust
+                 odls_default_fork_local_proc
+
+     0.01%     0.00%   mpirun  [kernel.kallsyms]     [k] filemap_fault                         
+             |
+             --- filemap_fault
+                 __do_fault
+                 handle_pte_fault
+                 handle_mm_fault
+                 __do_page_fault
+                 do_page_fault
+                 page_fault
+                 __nptl_set_robust
+                 odls_default_fork_local_proc
+
+     0.01%     0.01%   mpirun  [kernel.kallsyms]     [k] find_get_page                         
+             |
+             --- find_get_page
+                 filemap_fault
+                 __do_fault
+                 handle_pte_fault
+                 handle_mm_fault
+                 __do_page_fault
+                 do_page_fault
+                 page_fault
+                 __nptl_set_robust
+                 odls_default_fork_local_proc
+
+     0.01%     0.01%   mpirun  [kernel.kallsyms]     [k] unmap_vmas                            
+             |
+             --- unmap_vmas
+                 exit_mmap
+                 mmput
+                 flush_old_exec
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 __execve
+
+     0.01%     0.00%   mpirun  [unknown]             [k] 0x00000031702ac727                    
+             |
+             --- 0x31702ac727
+
+     0.01%     0.00%   mpirun  [kernel.kallsyms]     [k] elf_map                               
+             |
+             --- elf_map
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 0x31702ac727
+
+     0.01%     0.00%   mpirun  [kernel.kallsyms]     [k] do_mmap_pgoff                         
+             |
+             --- do_mmap_pgoff
+                 elf_map
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 0x31702ac727
+
+     0.01%     0.00%   mpirun  [kernel.kallsyms]     [k] mmap_region                           
+             |
+             --- mmap_region
+                 do_mmap_pgoff
+                 elf_map
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 0x31702ac727
+
+     0.01%     0.00%   mpirun  [kernel.kallsyms]     [k] vma_link                              
+             |
+             --- vma_link
+                 mmap_region
+                 do_mmap_pgoff
+                 elf_map
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 0x31702ac727
+
+     0.01%     0.01%   mpirun  [kernel.kallsyms]     [k] _spin_lock                            
+             |
+             --- _spin_lock
+                 vma_link
+                 mmap_region
+                 do_mmap_pgoff
+                 elf_map
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 0x31702ac727
+
+     0.01%     0.00%   mpirun  libc-2.12.so          [.] __libc_fork                           
+             |
+             --- __libc_fork
+                 odls_default_fork_local_proc
+
+     0.01%     0.01%   mpirun  [kernel.kallsyms]     [k] error_exit                            
+             |
+             --- error_exit
+                 __libc_fork
+                 odls_default_fork_local_proc
+
+     0.00%     0.00%   mpirun  [kernel.kallsyms]     [k] perf_event_context_sched_in           
+             |
+             --- perf_event_context_sched_in
+                |          
+                |--96.79%-- __perf_event_task_sched_in
+                |          finish_task_switch
+                |          |          
+                |          |--93.86%-- thread_return
+                |          |          |          
+                |          |          |--41.17%-- __cond_resched
+                |          |          |          _cond_resched
+                |          |          |          wait_for_common
+                |          |          |          wait_for_completion
+                |          |          |          sched_exec
+                |          |          |          do_execve
+                |          |          |          sys_execve
+                |          |          |          stub_execve
+                |          |          |          __execve
+                |          |          |          |          
+                |          |          |          |--90.02%-- 0x0
+                |          |          |          |          
+                |          |          |           --9.98%-- 0x866050
+                |          |          |          
+                |          |          |--24.37%-- pipe_wait
+                |          |          |          pipe_read
+                |          |          |          do_sync_read
+                |          |          |          vfs_read
+                |          |          |          sys_read
+                |          |          |          system_call_fastpath
+                |          |          |          __read_nocancel
+                |          |          |          
+                |          |          |--20.53%-- schedule_hrtimeout_range
+                |          |          |          poll_schedule_timeout
+                |          |          |          do_sys_poll
+                |          |          |          sys_poll
+                |          |          |          system_call_fastpath
+                |          |          |          __poll
+                |          |          |          
+                |          |           --13.94%-- schedule_timeout
+                |          |                     wait_for_common
+                |          |                     wait_for_completion
+                |          |                     flush_work
+                |          |                     flush_delayed_work
+                |          |                     tty_flush_to_ldisc
+                |          |                     n_tty_poll
+                |          |                     tty_poll
+                |          |                     do_sys_poll
+                |          |                     sys_poll
+                |          |                     system_call_fastpath
+                |          |                     __poll
+                |          |          
+                |           --6.14%-- schedule_tail
+                |                     ret_from_fork
+                |                     __libc_fork
+                |                     odls_default_fork_local_proc
+                |          
+                 --3.21%-- perf_event_comm
+                           set_task_comm
+                           setup_new_exec
+                           load_elf_binary
+                           search_binary_handler
+                           do_execve
+                           sys_execve
+                           stub_execve
+                           0x31702ac727
+
+     0.00%     0.00%   mpirun  [kernel.kallsyms]     [k] perf_pmu_enable                       
+             |
+             --- perf_pmu_enable
+                 perf_event_context_sched_in
+                |          
+                |--96.79%-- __perf_event_task_sched_in
+                |          finish_task_switch
+                |          |          
+                |          |--93.86%-- thread_return
+                |          |          |          
+                |          |          |--41.17%-- __cond_resched
+                |          |          |          _cond_resched
+                |          |          |          wait_for_common
+                |          |          |          wait_for_completion
+                |          |          |          sched_exec
+                |          |          |          do_execve
+                |          |          |          sys_execve
+                |          |          |          stub_execve
+                |          |          |          __execve
+                |          |          |          |          
+                |          |          |          |--90.02%-- 0x0
+                |          |          |          |          
+                |          |          |           --9.98%-- 0x866050
+                |          |          |          
+                |          |          |--24.37%-- pipe_wait
+                |          |          |          pipe_read
+                |          |          |          do_sync_read
+                |          |          |          vfs_read
+                |          |          |          sys_read
+                |          |          |          system_call_fastpath
+                |          |          |          __read_nocancel
+                |          |          |          
+                |          |          |--20.53%-- schedule_hrtimeout_range
+                |          |          |          poll_schedule_timeout
+                |          |          |          do_sys_poll
+                |          |          |          sys_poll
+                |          |          |          system_call_fastpath
+                |          |          |          __poll
+                |          |          |          
+                |          |           --13.94%-- schedule_timeout
+                |          |                     wait_for_common
+                |          |                     wait_for_completion
+                |          |                     flush_work
+                |          |                     flush_delayed_work
+                |          |                     tty_flush_to_ldisc
+                |          |                     n_tty_poll
+                |          |                     tty_poll
+                |          |                     do_sys_poll
+                |          |                     sys_poll
+                |          |                     system_call_fastpath
+                |          |                     __poll
+                |          |          
+                |           --6.14%-- schedule_tail
+                |                     ret_from_fork
+                |                     __libc_fork
+                |                     odls_default_fork_local_proc
+                |          
+                 --3.21%-- perf_event_comm
+                           set_task_comm
+                           setup_new_exec
+                           load_elf_binary
+                           search_binary_handler
+                           do_execve
+                           sys_execve
+                           stub_execve
+                           0x31702ac727
+
+     0.00%     0.00%   mpirun  [kernel.kallsyms]     [k] x86_pmu_enable                        
+             |
+             --- x86_pmu_enable
+                 perf_pmu_enable
+                 perf_event_context_sched_in
+                |          
+                |--96.79%-- __perf_event_task_sched_in
+                |          finish_task_switch
+                |          |          
+                |          |--93.86%-- thread_return
+                |          |          |          
+                |          |          |--41.17%-- __cond_resched
+                |          |          |          _cond_resched
+                |          |          |          wait_for_common
+                |          |          |          wait_for_completion
+                |          |          |          sched_exec
+                |          |          |          do_execve
+                |          |          |          sys_execve
+                |          |          |          stub_execve
+                |          |          |          __execve
+                |          |          |          |          
+                |          |          |          |--90.02%-- 0x0
+                |          |          |          |          
+                |          |          |           --9.98%-- 0x866050
+                |          |          |          
+                |          |          |--24.37%-- pipe_wait
+                |          |          |          pipe_read
+                |          |          |          do_sync_read
+                |          |          |          vfs_read
+                |          |          |          sys_read
+                |          |          |          system_call_fastpath
+                |          |          |          __read_nocancel
+                |          |          |          
+                |          |          |--20.53%-- schedule_hrtimeout_range
+                |          |          |          poll_schedule_timeout
+                |          |          |          do_sys_poll
+                |          |          |          sys_poll
+                |          |          |          system_call_fastpath
+                |          |          |          __poll
+                |          |          |          
+                |          |           --13.94%-- schedule_timeout
+                |          |                     wait_for_common
+                |          |                     wait_for_completion
+                |          |                     flush_work
+                |          |                     flush_delayed_work
+                |          |                     tty_flush_to_ldisc
+                |          |                     n_tty_poll
+                |          |                     tty_poll
+                |          |                     do_sys_poll
+                |          |                     sys_poll
+                |          |                     system_call_fastpath
+                |          |                     __poll
+                |          |          
+                |           --6.14%-- schedule_tail
+                |                     ret_from_fork
+                |                     __libc_fork
+                |                     odls_default_fork_local_proc
+                |          
+                 --3.21%-- perf_event_comm
+                           set_task_comm
+                           setup_new_exec
+                           load_elf_binary
+                           search_binary_handler
+                           do_execve
+                           sys_execve
+                           stub_execve
+                           0x31702ac727
+
+     0.00%     0.00%   mpirun  [kernel.kallsyms]     [k] intel_pmu_enable_all                  
+             |
+             --- intel_pmu_enable_all
+                 x86_pmu_enable
+                 perf_pmu_enable
+                 perf_event_context_sched_in
+                |          
+                |--96.79%-- __perf_event_task_sched_in
+                |          finish_task_switch
+                |          |          
+                |          |--93.86%-- thread_return
+                |          |          |          
+                |          |          |--41.17%-- __cond_resched
+                |          |          |          _cond_resched
+                |          |          |          wait_for_common
+                |          |          |          wait_for_completion
+                |          |          |          sched_exec
+                |          |          |          do_execve
+                |          |          |          sys_execve
+                |          |          |          stub_execve
+                |          |          |          __execve
+                |          |          |          |          
+                |          |          |          |--90.02%-- 0x0
+                |          |          |          |          
+                |          |          |           --9.98%-- 0x866050
+                |          |          |          
+                |          |          |--24.37%-- pipe_wait
+                |          |          |          pipe_read
+                |          |          |          do_sync_read
+                |          |          |          vfs_read
+                |          |          |          sys_read
+                |          |          |          system_call_fastpath
+                |          |          |          __read_nocancel
+                |          |          |          
+                |          |          |--20.53%-- schedule_hrtimeout_range
+                |          |          |          poll_schedule_timeout
+                |          |          |          do_sys_poll
+                |          |          |          sys_poll
+                |          |          |          system_call_fastpath
+                |          |          |          __poll
+                |          |          |          
+                |          |           --13.94%-- schedule_timeout
+                |          |                     wait_for_common
+                |          |                     wait_for_completion
+                |          |                     flush_work
+                |          |                     flush_delayed_work
+                |          |                     tty_flush_to_ldisc
+                |          |                     n_tty_poll
+                |          |                     tty_poll
+                |          |                     do_sys_poll
+                |          |                     sys_poll
+                |          |                     system_call_fastpath
+                |          |                     __poll
+                |          |          
+                |           --6.14%-- schedule_tail
+                |                     ret_from_fork
+                |                     __libc_fork
+                |                     odls_default_fork_local_proc
+                |          
+                 --3.21%-- perf_event_comm
+                           set_task_comm
+                           setup_new_exec
+                           load_elf_binary
+                           search_binary_handler
+                           do_execve
+                           sys_execve
+                           stub_execve
+                           0x31702ac727
+
+     0.00%     0.00%   mpirun  [kernel.kallsyms]     [k] native_write_msr_safe                 
+             |
+             --- native_write_msr_safe
+                 intel_pmu_enable_all
+                 x86_pmu_enable
+                 perf_pmu_enable
+                 perf_event_context_sched_in
+                |          
+                |--96.79%-- __perf_event_task_sched_in
+                |          finish_task_switch
+                |          |          
+                |          |--93.86%-- thread_return
+                |          |          |          
+                |          |          |--41.17%-- __cond_resched
+                |          |          |          _cond_resched
+                |          |          |          wait_for_common
+                |          |          |          wait_for_completion
+                |          |          |          sched_exec
+                |          |          |          do_execve
+                |          |          |          sys_execve
+                |          |          |          stub_execve
+                |          |          |          __execve
+                |          |          |          |          
+                |          |          |          |--90.02%-- 0x0
+                |          |          |          |          
+                |          |          |           --9.98%-- 0x866050
+                |          |          |          
+                |          |          |--24.37%-- pipe_wait
+                |          |          |          pipe_read
+                |          |          |          do_sync_read
+                |          |          |          vfs_read
+                |          |          |          sys_read
+                |          |          |          system_call_fastpath
+                |          |          |          __read_nocancel
+                |          |          |          
+                |          |          |--20.53%-- schedule_hrtimeout_range
+                |          |          |          poll_schedule_timeout
+                |          |          |          do_sys_poll
+                |          |          |          sys_poll
+                |          |          |          system_call_fastpath
+                |          |          |          __poll
+                |          |          |          
+                |          |           --13.94%-- schedule_timeout
+                |          |                     wait_for_common
+                |          |                     wait_for_completion
+                |          |                     flush_work
+                |          |                     flush_delayed_work
+                |          |                     tty_flush_to_ldisc
+                |          |                     n_tty_poll
+                |          |                     tty_poll
+                |          |                     do_sys_poll
+                |          |                     sys_poll
+                |          |                     system_call_fastpath
+                |          |                     __poll
+                |          |          
+                |           --6.14%-- schedule_tail
+                |                     ret_from_fork
+                |                     __libc_fork
+                |                     odls_default_fork_local_proc
+                |          
+                 --3.21%-- perf_event_comm
+                           set_task_comm
+                           setup_new_exec
+                           load_elf_binary
+                           search_binary_handler
+                           do_execve
+                           sys_execve
+                           stub_execve
+                           0x31702ac727
+
+     0.00%     0.00%   mpirun  [kernel.kallsyms]     [k] finish_task_switch                    
+             |
+             --- finish_task_switch
+                |          
+                |--93.86%-- thread_return
+                |          |          
+                |          |--41.17%-- __cond_resched
+                |          |          _cond_resched
+                |          |          wait_for_common
+                |          |          wait_for_completion
+                |          |          sched_exec
+                |          |          do_execve
+                |          |          sys_execve
+                |          |          stub_execve
+                |          |          __execve
+                |          |          |          
+                |          |          |--90.02%-- 0x0
+                |          |          |          
+                |          |           --9.98%-- 0x866050
+                |          |          
+                |          |--24.37%-- pipe_wait
+                |          |          pipe_read
+                |          |          do_sync_read
+                |          |          vfs_read
+                |          |          sys_read
+                |          |          system_call_fastpath
+                |          |          __read_nocancel
+                |          |          
+                |          |--20.53%-- schedule_hrtimeout_range
+                |          |          poll_schedule_timeout
+                |          |          do_sys_poll
+                |          |          sys_poll
+                |          |          system_call_fastpath
+                |          |          __poll
+                |          |          
+                |           --13.94%-- schedule_timeout
+                |                     wait_for_common
+                |                     wait_for_completion
+                |                     flush_work
+                |                     flush_delayed_work
+                |                     tty_flush_to_ldisc
+                |                     n_tty_poll
+                |                     tty_poll
+                |                     do_sys_poll
+                |                     sys_poll
+                |                     system_call_fastpath
+                |                     __poll
+                |          
+                 --6.14%-- schedule_tail
+                           ret_from_fork
+                           __libc_fork
+                           odls_default_fork_local_proc
+
+     0.00%     0.00%   mpirun  [kernel.kallsyms]     [k] __perf_event_task_sched_in            
+             |
+             --- __perf_event_task_sched_in
+                 finish_task_switch
+                |          
+                |--93.86%-- thread_return
+                |          |          
+                |          |--41.17%-- __cond_resched
+                |          |          _cond_resched
+                |          |          wait_for_common
+                |          |          wait_for_completion
+                |          |          sched_exec
+                |          |          do_execve
+                |          |          sys_execve
+                |          |          stub_execve
+                |          |          __execve
+                |          |          |          
+                |          |          |--90.02%-- 0x0
+                |          |          |          
+                |          |           --9.98%-- 0x866050
+                |          |          
+                |          |--24.37%-- pipe_wait
+                |          |          pipe_read
+                |          |          do_sync_read
+                |          |          vfs_read
+                |          |          sys_read
+                |          |          system_call_fastpath
+                |          |          __read_nocancel
+                |          |          
+                |          |--20.53%-- schedule_hrtimeout_range
+                |          |          poll_schedule_timeout
+                |          |          do_sys_poll
+                |          |          sys_poll
+                |          |          system_call_fastpath
+                |          |          __poll
+                |          |          
+                |           --13.94%-- schedule_timeout
+                |                     wait_for_common
+                |                     wait_for_completion
+                |                     flush_work
+                |                     flush_delayed_work
+                |                     tty_flush_to_ldisc
+                |                     n_tty_poll
+                |                     tty_poll
+                |                     do_sys_poll
+                |                     sys_poll
+                |                     system_call_fastpath
+                |                     __poll
+                |          
+                 --6.14%-- schedule_tail
+                           ret_from_fork
+                           __libc_fork
+                           odls_default_fork_local_proc
+
+     0.00%     0.00%   mpirun  [kernel.kallsyms]     [k] thread_return                         
+             |
+             --- thread_return
+                |          
+                |--41.17%-- __cond_resched
+                |          _cond_resched
+                |          wait_for_common
+                |          wait_for_completion
+                |          sched_exec
+                |          do_execve
+                |          sys_execve
+                |          stub_execve
+                |          __execve
+                |          |          
+                |          |--90.02%-- 0x0
+                |          |          
+                |           --9.98%-- 0x866050
+                |          
+                |--24.37%-- pipe_wait
+                |          pipe_read
+                |          do_sync_read
+                |          vfs_read
+                |          sys_read
+                |          system_call_fastpath
+                |          __read_nocancel
+                |          
+                |--20.53%-- schedule_hrtimeout_range
+                |          poll_schedule_timeout
+                |          do_sys_poll
+                |          sys_poll
+                |          system_call_fastpath
+                |          __poll
+                |          
+                 --13.94%-- schedule_timeout
+                           wait_for_common
+                           wait_for_completion
+                           flush_work
+                           flush_delayed_work
+                           tty_flush_to_ldisc
+                           n_tty_poll
+                           tty_poll
+                           do_sys_poll
+                           sys_poll
+                           system_call_fastpath
+                           __poll
+
+     0.00%     0.00%   mpirun  [kernel.kallsyms]     [k] wait_for_completion                   
+             |
+             --- wait_for_completion
+                |          
+                |--74.71%-- sched_exec
+                |          do_execve
+                |          sys_execve
+                |          stub_execve
+                |          __execve
+                |          |          
+                |          |--90.02%-- 0x0
+                |          |          
+                |           --9.98%-- 0x866050
+                |          
+                 --25.29%-- flush_work
+                           flush_delayed_work
+                           tty_flush_to_ldisc
+                           n_tty_poll
+                           tty_poll
+                           do_sys_poll
+                           sys_poll
+                           system_call_fastpath
+                           __poll
+
+     0.00%     0.00%   mpirun  [kernel.kallsyms]     [k] wait_for_common                       
+             |
+             --- wait_for_common
+                 wait_for_completion
+                |          
+                |--74.71%-- sched_exec
+                |          do_execve
+                |          sys_execve
+                |          stub_execve
+                |          __execve
+                |          |          
+                |          |--90.02%-- 0x0
+                |          |          
+                |           --9.98%-- 0x866050
+                |          
+                 --25.29%-- flush_work
+                           flush_delayed_work
+                           tty_flush_to_ldisc
+                           n_tty_poll
+                           tty_poll
+                           do_sys_poll
+                           sys_poll
+                           system_call_fastpath
+                           __poll
+
+     0.00%     0.00%   mpirun  [kernel.kallsyms]     [k] sched_exec                            
+             |
+             --- sched_exec
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 __execve
+                |          
+                |--90.02%-- 0x0
+                |          
+                 --9.98%-- 0x866050
+
+     0.00%     0.00%   mpirun  [kernel.kallsyms]     [k] _cond_resched                         
+             |
+             --- _cond_resched
+                 wait_for_common
+                 wait_for_completion
+                 sched_exec
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 __execve
+                |          
+                |--90.02%-- 0x0
+                |          
+                 --9.98%-- 0x866050
+
+     0.00%     0.00%   mpirun  [kernel.kallsyms]     [k] __cond_resched                        
+             |
+             --- __cond_resched
+                 _cond_resched
+                 wait_for_common
+                 wait_for_completion
+                 sched_exec
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 __execve
+                |          
+                |--90.02%-- 0x0
+                |          
+                 --9.98%-- 0x866050
+
+     0.00%     0.00%   mpirun  [kernel.kallsyms]     [k] sys_poll                              
+             |
+             --- sys_poll
+                 system_call_fastpath
+                 __poll
+
+     0.00%     0.00%   mpirun  [kernel.kallsyms]     [k] do_sys_poll                           
+             |
+             --- do_sys_poll
+                 sys_poll
+                 system_call_fastpath
+                 __poll
+
+     0.00%     0.00%   mpirun  libpthread-2.12.so    [.] __read_nocancel                       
+             |
+             --- __read_nocancel
+
+     0.00%     0.00%   mpirun  [kernel.kallsyms]     [k] do_sync_read                          
+             |
+             --- do_sync_read
+                 vfs_read
+                 sys_read
+                 system_call_fastpath
+                 __read_nocancel
+
+     0.00%     0.00%   mpirun  [kernel.kallsyms]     [k] pipe_read                             
+             |
+             --- pipe_read
+                 do_sync_read
+                 vfs_read
+                 sys_read
+                 system_call_fastpath
+                 __read_nocancel
+
+     0.00%     0.00%   mpirun  [kernel.kallsyms]     [k] pipe_wait                             
+             |
+             --- pipe_wait
+                 pipe_read
+                 do_sync_read
+                 vfs_read
+                 sys_read
+                 system_call_fastpath
+                 __read_nocancel
+
+     0.00%     0.00%   mpirun  [kernel.kallsyms]     [k] poll_schedule_timeout                 
+             |
+             --- poll_schedule_timeout
+                 do_sys_poll
+                 sys_poll
+                 system_call_fastpath
+                 __poll
+
+     0.00%     0.00%   mpirun  [kernel.kallsyms]     [k] schedule_hrtimeout_range              
+             |
+             --- schedule_hrtimeout_range
+                 poll_schedule_timeout
+                 do_sys_poll
+                 sys_poll
+                 system_call_fastpath
+                 __poll
+
+     0.00%     0.00%   mpirun  [kernel.kallsyms]     [k] tty_poll                              
+             |
+             --- tty_poll
+                 do_sys_poll
+                 sys_poll
+                 system_call_fastpath
+                 __poll
+
+     0.00%     0.00%   mpirun  [kernel.kallsyms]     [k] n_tty_poll                            
+             |
+             --- n_tty_poll
+                 tty_poll
+                 do_sys_poll
+                 sys_poll
+                 system_call_fastpath
+                 __poll
+
+     0.00%     0.00%   mpirun  [kernel.kallsyms]     [k] tty_flush_to_ldisc                    
+             |
+             --- tty_flush_to_ldisc
+                 n_tty_poll
+                 tty_poll
+                 do_sys_poll
+                 sys_poll
+                 system_call_fastpath
+                 __poll
+
+     0.00%     0.00%   mpirun  [kernel.kallsyms]     [k] flush_delayed_work                    
+             |
+             --- flush_delayed_work
+                 tty_flush_to_ldisc
+                 n_tty_poll
+                 tty_poll
+                 do_sys_poll
+                 sys_poll
+                 system_call_fastpath
+                 __poll
+
+     0.00%     0.00%   mpirun  [kernel.kallsyms]     [k] flush_work                            
+             |
+             --- flush_work
+                 flush_delayed_work
+                 tty_flush_to_ldisc
+                 n_tty_poll
+                 tty_poll
+                 do_sys_poll
+                 sys_poll
+                 system_call_fastpath
+                 __poll
+
+     0.00%     0.00%   mpirun  [kernel.kallsyms]     [k] schedule_timeout                      
+             |
+             --- schedule_timeout
+                 wait_for_common
+                 wait_for_completion
+                 flush_work
+                 flush_delayed_work
+                 tty_flush_to_ldisc
+                 n_tty_poll
+                 tty_poll
+                 do_sys_poll
+                 sys_poll
+                 system_call_fastpath
+                 __poll
+
+     0.00%     0.00%   mpirun  [kernel.kallsyms]     [k] ret_from_fork                         
+             |
+             --- ret_from_fork
+                 __libc_fork
+                 odls_default_fork_local_proc
+
+     0.00%     0.00%   mpirun  [kernel.kallsyms]     [k] schedule_tail                         
+             |
+             --- schedule_tail
+                 ret_from_fork
+                 __libc_fork
+                 odls_default_fork_local_proc
+
+     0.00%     0.00%   mpirun  [kernel.kallsyms]     [k] setup_new_exec                        
+             |
+             --- setup_new_exec
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 0x31702ac727
+
+     0.00%     0.00%   mpirun  [kernel.kallsyms]     [k] set_task_comm                         
+             |
+             --- set_task_comm
+                 setup_new_exec
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 0x31702ac727
+
+     0.00%     0.00%   mpirun  [kernel.kallsyms]     [k] perf_event_comm                       
+             |
+             --- perf_event_comm
+                 set_task_comm
+                 setup_new_exec
+                 load_elf_binary
+                 search_binary_handler
+                 do_execve
+                 sys_execve
+                 stub_execve
+                 0x31702ac727
+
+
+

@@ -1,5 +1,5 @@
 SHELL=/bin/sh
-CLASS=W
+CLASS=C
 VERSION=
 SFILE=config/suite.def
 
